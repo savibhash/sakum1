@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard|SAKUM</title>
+
+    <link rel="icon" href="../travel.png" type="image/png">
+
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+
+<body class="dashboard-page">
+
+
+    <!-- ==================================================
+         APP LAYOUT
+    =================================================== -->
+
+    <div class="dashboard-layout">
+
+
+        <!-- ==================================================
+             SIDEBAR
+        =================================================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+
+            <!-- Sidebar header -->
+
+            <a href="../index.html"
+                style="text-decoration: none !important; color: inherit !important; display: block;">
+                <div class="brand-box">
+                    <div class="brand-logo">S</div>
+                    <span class="brand-name">SAKUM</span>
+                </div>
+            </a>
+            <!-- your navigation -->
+
+
+            <!-- Navigation -->
+
+            <nav class="sidebar-nav" aria-label="Dashboard navigation">
+
+                <p class="nav-heading">
+                    WORKSPACE
+                </p>
+
+
+                <button class="side-link active" data-section="dashboard">
+                    <span>⌂</span>
+                    <span>Dashboard</span>
+                </button>
+
+
+                <button class="side-link" data-section="trips">
+                    <span>🧳</span>
+                    <span>My Trips</span>
+                </button>
+
+
+                <button class="side-link" data-section="itinerary">
+                    <span>☷</span>
+                    <span>Itinerary</span>
+                </button>
+
+
+                <button class="side-link" data-section="journal">
+                    <span>✎</span>
+                    <span>Write Journal</span>
+                </button>
+
+
+                <button class="side-link" data-section="notes">
+                    <span>▤</span>
+                    <span>Notes</span>
+                </button>
+
+
+                <button class="side-link" data-section="tickets">
+                    <span>🎫</span>
+                    <span>Tickets</span>
+                </button>
+
+
+                <p class="nav-heading">
+                    TRAVEL
+                </p>
+
+
+                <button class="side-link" data-section="saved">
+                    <span>♡</span>
+                    <span>Saved Places</span>
+                </button>
+
+
+                <button class="side-link" data-section="budget">
+                    <span>₹</span>
+                    <span>Budget</span>
+                </button>
+
+
+                <p class="nav-heading">
+                    ACCOUNT
+                </p>
+
+
+                <button class="side-link" data-section="profile">
+                    <span>◉</span>
+                    <span>Profile</span>
+                </button>
+
+
+                <button class="side-link" data-section="settings">
+                    <span>⚙</span>
+                    <span>Settings</span>
+                </button>
+
+            </nav>
+
+
+            <!-- Sidebar bottom -->
+
+            <footer class="sidebar-footer">
+
+                <button type="button" class="logout-link" id="dashboardLogout">
+                    <span>↪</span>
+                    <span>Logout</span>
+                </button>
+
+            </footer>
+
+        </aside>
+
+
+        <!-- Mobile overlay -->
+
+        <div class="sidebar-overlay" id="sidebarOverlay">
+        </div>
+
+
+        <!-- ==================================================
+             MAIN CONTENT
+        =================================================== -->
+
+        <main class="dashboard-main">
+
+
+            <!-- Top bar -->
+
+            <header class="topbar">
+
+                <button type="button" class="mobile-menu" id="mobileMenu" aria-label="Open navigation">
+                    ☰
+                </button>
+
+
+                <div class="topbar-title">
+
+                    <span>
+                        TRAVEL WORKSPACE
+                    </span>
+
+                    <h1 id="pageTitle">
+                        Dashboard
+                    </h1>
+
+                </div>
+
+
+                <div class="topbar-profile">
+
+                    <span class="topbar-name" id="topbarName">
+                        Traveller
+                    </span>
+
+                    <button type="button" class="small-avatar" id="topAvatar">
+                        T
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- ==================================================
+                 DASHBOARD SECTION
+            =================================================== -->
+
+            <section class="dashboard-section active" id="section-dashboard">
+
+                <div class="welcome-card">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            GOOD DAY, TRAVELLER
+                        </p>
+
+                        <h2 id="welcomeTitle">
+                            Welcome back!
+                        </h2>
+
+                        <p>
+                            Your next adventure is waiting.
+                            Keep planning, exploring and
+                            collecting memories.
+                        </p>
+
+                    </div>
+
+                    <div class="welcome-decoration">
+                        ✈
+                    </div>
+
+                </div>
+
+
+                <!-- Statistics -->
+
+                <section class="stats-grid" aria-label="Travel statistics">
+
+                    <article class="stat-card">
+
+                        <span class="stat-icon">
+                            🧳
+                        </span>
+
+                        <div>
+
+                            <span class="stat-label">
+                                Trips
+                            </span>
+
+                            <strong id="tripCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-icon">
+                            📖
+                        </span>
+
+                        <div>
+
+                            <span class="stat-label">
+                                Journal entries
+                            </span>
+
+                            <strong id="journalCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-icon">
+                            ♡
+                        </span>
+
+                        <div>
+
+                            <span class="stat-label">
+                                Saved places
+                            </span>
+
+                            <strong id="savedCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <span class="stat-icon">
+                            ₹
+                        </span>
+
+                        <div>
+
+                            <span class="stat-label">
+                                Trip budget
+                            </span>
+
+                            <strong id="budgetTotal">
+                                ₹0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- Quick Actions -->
+
+                <section class="content-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p class="eyebrow">
+                                QUICK ACTIONS
+                            </p>
+
+                            <h2>
+                                Start something
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-grid">
+
+                        <button class="quick-card" data-open-section="trips">
+
+                            <span>🧳</span>
+
+                            <strong>
+                                Create a trip
+                            </strong>
+
+                            <small>
+                                Plan your next adventure
+                            </small>
+
+                        </button>
+
+
+                        <button class="quick-card" data-open-section="journal">
+
+                            <span>✎</span>
+
+                            <strong>
+                                Write a journal
+                            </strong>
+
+                            <small>
+                                Save your travel memories
+                            </small>
+
+                        </button>
+
+
+                        <button class="quick-card" data-open-section="notes">
+
+                            <span>📝</span>
+
+                            <strong>
+                                Add a note
+                            </strong>
+
+                            <small>
+                                Don't forget the details
+                            </small>
+
+                        </button>
+
+
+                        <button class="quick-card" data-open-section="tickets">
+
+                            <span>🎫</span>
+
+                            <strong>
+                                Add ticket
+                            </strong>
+
+                            <small>
+                                Keep travel documents organized
+                            </small>
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Upcoming trip -->
+
+                <section class="content-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <p class="eyebrow">
+                                UPCOMING
+                            </p>
+
+                            <h2>
+                                Your next trip
+                            </h2>
+
+                        </div>
+
+                        <button class="text-button" data-open-section="trips">
+                            View trips →
+                        </button>
+
+                    </div>
+
+
+                    <article class="upcoming-trip">
+
+                        <div class="trip-image"></div>
+
+                        <div class="trip-details">
+
+                            <span class="trip-status">
+                                Upcoming
+                            </span>
+
+                            <h3>
+                                Your next adventure
+                            </h3>
+
+                            <p>
+                                Add a trip from the
+                                <strong>My Trips</strong>
+                                section.
+                            </p>
+
+                            <button class="primary-button" data-open-section="trips">
+                                Plan a trip →
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+            </section>
+
+
+            <!-- ==================================================
+                 TRIPS
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-trips">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            YOUR JOURNEYS
+                        </p>
+
+                        <h2>
+                            My Trips
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form class="form-card" id="tripForm">
+
+                    <h3>
+                        Create a trip
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="field">
+
+                            <label for="tripName">
+                                Trip name
+                            </label>
+
+                            <input type="text" id="tripName" placeholder="Japan Adventure" required>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="tripDestination">
+                                Destination
+                            </label>
+
+                            <input type="text" id="tripDestination" placeholder="Tokyo, Japan" required>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="tripDate">
+                                Date
+                            </label>
+
+                            <input type="date" id="tripDate" required>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="tripBudget">
+                                Budget
+                            </label>
+
+                            <input type="number" id="tripBudget" placeholder="50000" min="0" required>
+
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="primary-button">
+                        Save Trip
+                    </button>
+
+                </form>
+
+
+                <div class="saved-list" id="tripList"></div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 ITINERARY
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-itinerary">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            ORGANIZE
+                        </p>
+
+                        <h2>
+                            Itinerary
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form class="form-card" id="itineraryForm">
+
+                    <h3>
+                        Add itinerary item
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="field">
+
+                            <label for="itemDate">
+                                Date
+                            </label>
+
+                            <input type="date" id="itemDate" required>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="itemTime">
+                                Time
+                            </label>
+
+                            <input type="time" id="itemTime">
+
+                        </div>
+
+
+                        <div class="field field-wide">
+
+                            <label for="itemTitle">
+                                Activity
+                            </label>
+
+                            <input type="text" id="itemTitle" placeholder="Visit Shibuya Crossing" required>
+
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="primary-button">
+                        Add to itinerary
+                    </button>
+
+                </form>
+
+
+                <div class="saved-list" id="itineraryList"></div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 JOURNAL
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-journal">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            YOUR STORIES
+                        </p>
+
+                        <h2>
+                            Travel Journal
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form class="form-card" id="journalForm">
+
+                    <h3>
+                        Write a journal entry
+                    </h3>
+
+
+                    <div class="field">
+
+                        <label for="journalTitle">
+                            Title
+                        </label>
+
+                        <input type="text" id="journalTitle" placeholder="The road to the mountains" required>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="journalText">
+                            Your story
+                        </label>
+
+                        <textarea id="journalText" rows="7" placeholder="Write about your journey..."
+                            required></textarea>
+
+                    </div>
+
+
+                    <button type="submit" class="primary-button">
+                        Save Journal
+                    </button>
+
+                </form>
+
+
+                <div class="saved-list" id="journalList"></div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 NOTES
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-notes">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            REMEMBER
+                        </p>
+
+                        <h2>
+                            Notes
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form class="form-card" id="notesForm">
+
+                    <div class="field">
+
+                        <label for="noteText">
+                            New note
+                        </label>
+
+                        <textarea id="noteText" rows="5" placeholder="Passport number, hotel address, packing list..."
+                            required></textarea>
+
+                    </div>
+
+
+                    <button type="submit" class="primary-button">
+                        Save Note
+                    </button>
+
+                </form>
+
+
+                <div class="saved-list" id="notesList"></div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 TICKETS
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-tickets">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            TRAVEL DOCUMENTS
+                        </p>
+
+                        <h2>
+                            Tickets
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form class="form-card" id="ticketForm">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+
+                            <label for="ticketType">
+                                Type
+                            </label>
+
+                            <select id="ticketType">
+
+                                <option>
+                                    Flight
+                                </option>
+
+                                <option>
+                                    Train
+                                </option>
+
+                                <option>
+                                    Bus
+                                </option>
+
+                                <option>
+                                    Hotel
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="ticketName">
+                                Details
+                            </label>
+
+                            <input type="text" id="ticketName" placeholder="Delhi → Tokyo" required>
+
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="primary-button">
+                        Save Ticket
+                    </button>
+
+                </form>
+
+
+                <div class="saved-list" id="ticketList"></div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 SAVED PLACES
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-saved">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            YOUR COLLECTION
+                        </p>
+
+                        <h2>
+                            Saved Places
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form class="form-card" id="savedForm">
+
+                    <div class="field">
+
+                        <label for="savedPlace">
+                            Add a place
+                        </label>
+
+                        <input type="text" id="savedPlace" placeholder="Mount Fuji" required>
+
+                    </div>
+
+
+                    <button type="submit" class="primary-button">
+                        Save Place
+                    </button>
+
+                </form>
+
+
+                <div class="saved-list" id="savedList"></div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 BUDGET
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-budget">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            FINANCES
+                        </p>
+
+                        <h2>
+                            Travel Budget
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="budget-summary">
+
+                    <span>
+                        Total planned budget
+                    </span>
+
+                    <strong id="budgetPageTotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="saved-list" id="budgetList"></div>
+
+            </section>
+
+
+            <!-- ==================================================
+                 PROFILE
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-profile">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            YOUR ACCOUNT
+                        </p>
+
+                        <h2>
+                            Profile
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <article class="profile-card">
+
+                    <div class="profile-photo-area">
+
+                        <div class="profile-photo" id="profilePhoto">
+                            {firstLetter}
+                        </div>
+
+
+                        <label class="photo-upload">
+
+                            Change photo
+
+                            <input type="file" id="photoInput" accept="image/*">
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="profile-information">
+
+                        <h3 id="profileName">
+                            Traveller
+                        </h3>
+
+                        <p id="profileEmail">
+                            traveller@example.com
+                        </p>
+
+                        <span class="member-badge">
+                            SAKUM Traveller
+                        </span>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- ==================================================
+                 SETTINGS
+            =================================================== -->
+
+            <section class="dashboard-section" id="section-settings">
+
+                <div class="page-header">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            PERSONALIZE
+                        </p>
+
+                        <h2>
+                            Settings
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <article class="settings-card">
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <strong>
+                                Compact sidebar
+                            </strong>
+
+                            <span>
+                                Make your dashboard navigation smaller.
+                            </span>
+
+                        </div>
+
+                        <button type="button" class="setting-toggle" id="compactToggle">
+                            OFF
+                        </button>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <strong>
+                                Confirm logout
+                            </strong>
+
+                            <span>
+                                Ask before logging out.
+                            </span>
+
+                        </div>
+
+                        <button type="button" class="setting-toggle" id="logoutConfirmToggle">
+                            ON
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- Footer -->
+
+            <footer class="dashboard-footer">
+
+                <span>
+                    © 2026 SAKUM
+                </span>
+
+                <span>
+                    Plan • Travel • Remember
+                </span>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script type="module" src="dashboard.js"></script>
+
+</body>
+
+</html>

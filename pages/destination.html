@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Destination | SAKUM</title>
+
+    <meta name="description"
+        content="Explore destination information, travel tips, budgets, climate, culture and safety with SAKUM.">
+
+    <link rel="icon" href="../travel.png" type="image/png">
+
+    <link rel="stylesheet" href="destination.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <header class="destination-header">
+
+        <nav class="destination-nav" aria-label="Destination navigation">
+
+            <a href="../index.html" class="destination-brand">
+
+                <span class="brand-letter">
+                    S
+                </span>
+
+                <span>
+                    SAKUM
+                </span>
+
+            </a>
+
+
+            <div class="destination-nav-links">
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+                <a href="search.html">
+                    Destinations
+                </a>
+
+                <a href="../dashboard/dashboard.html">
+                    My Trips
+                </a>
+
+                <a href="../dashboard/dashboard.html">
+                    Journal
+                </a>
+
+            </div>
+
+
+            <a href="../dashboard/dashboard.html" class="destination-dashboard-btn">
+                Dashboard →
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main id="destinationApp">
+
+
+        <!-- ================================================
+             HERO
+        ================================================= -->
+
+        <section class="destination-hero" id="destinationHero">
+
+            <div class="hero-overlay"></div>
+
+
+            <div class="hero-content">
+
+                <a href="search.html" class="back-link">
+                    ← Explore destinations
+                </a>
+
+
+                <div class="hero-country" id="heroCountry">
+                    COUNTRY
+                </div>
+
+
+                <h1 id="heroTitle">
+                    Destination
+                </h1>
+
+
+                <p id="heroTagline">
+                    Discover your next journey.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a href="../dashboard/dashboard.html" class="hero-plan-btn" id="planTripButton">
+                        ✈ Plan this trip
+                    </a>
+
+
+                    <button type="button" class="hero-print-btn" id="printGuideButton">
+                        🖨 Print guide
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <div class="destination-container">
+
+
+            <!-- =============================================
+                 INTRO
+            ============================================== -->
+
+            <section class="destination-intro">
+
+                <div class="intro-main">
+
+                    <p class="section-label">
+                        THE ESSENTIAL GUIDE
+                    </p>
+
+
+                    <h2 id="overviewTitle">
+                        About this destination
+                    </h2>
+
+
+                    <p class="intro-description" id="overviewDescription">
+                    </p>
+
+                </div>
+
+
+                <aside class="intro-highlight">
+
+                    <span class="highlight-icon">
+                        🧭
+                    </span>
+
+                    <strong>
+                        SAKUM traveller guide
+                    </strong>
+
+                    <p>
+                        Planning information for
+                        geography, culture, climate,
+                        safety and budgeting.
+                    </p>
+
+                </aside>
+
+            </section>
+
+
+            <!-- =============================================
+                 QUICK FACTS
+            ============================================== -->
+
+            <section class="guide-section">
+
+                <header class="section-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            AT A GLANCE
+                        </p>
+
+                        <h2>
+                            Know before you go
+                        </h2>
+
+                    </div>
+
+                </header>
+
+
+                <div class="facts-grid">
+
+
+                    <article class="fact-card">
+
+                        <span class="fact-icon">
+                            🗺️
+                        </span>
+
+                        <div>
+
+                            <span>
+                                Geography
+                            </span>
+
+                            <strong id="factGeography">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="fact-card">
+
+                        <span class="fact-icon">
+                            🌦️
+                        </span>
+
+                        <div>
+
+                            <span>
+                                Climate
+                            </span>
+
+                            <strong id="factClimate">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="fact-card">
+
+                        <span class="fact-icon">
+                            🗣️
+                        </span>
+
+                        <div>
+
+                            <span>
+                                Language
+                            </span>
+
+                            <strong id="factLanguage">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="fact-card">
+
+                        <span class="fact-icon">
+                            💱
+                        </span>
+
+                        <div>
+
+                            <span>
+                                Currency
+                            </span>
+
+                            <strong id="factCurrency">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="fact-card">
+
+                        <span class="fact-icon">
+                            📅
+                        </span>
+
+                        <div>
+
+                            <span>
+                                Best time
+                            </span>
+
+                            <strong id="factBestTime">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="fact-card">
+
+                        <span class="fact-icon">
+                            🕐
+                        </span>
+
+                        <div>
+
+                            <span>
+                                Time zone
+                            </span>
+
+                            <strong id="factTimezone">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 BEST PLACES
+            ============================================== -->
+
+            <section class="guide-section">
+
+                <header class="section-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            EXPLORE
+                        </p>
+
+                        <h2>
+                            Places worth discovering
+                        </h2>
+
+                    </div>
+
+                </header>
+
+
+                <div class="places-grid" id="placesGrid"></div>
+
+            </section>
+
+
+            <!-- =============================================
+                 TRAVEL KNOWLEDGE
+            ============================================== -->
+
+            <section class="knowledge-grid">
+
+
+                <article class="knowledge-card">
+
+                    <div class="knowledge-icon">
+                        🌎
+                    </div>
+
+                    <div>
+
+                        <p class="section-label">
+                            GEOGRAPHY
+                        </p>
+
+                        <h2>
+                            Landscape & location
+                        </h2>
+
+                        <p id="geographyText">
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="knowledge-card">
+
+                    <div class="knowledge-icon">
+                        ☀️
+                    </div>
+
+                    <div>
+
+                        <p class="section-label">
+                            CLIMATE
+                        </p>
+
+                        <h2>
+                            Weather & seasons
+                        </h2>
+
+                        <p id="climateText">
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="knowledge-card">
+
+                    <div class="knowledge-icon">
+                        🏛️
+                    </div>
+
+                    <div>
+
+                        <p class="section-label">
+                            CULTURE
+                        </p>
+
+                        <h2>
+                            People & customs
+                        </h2>
+
+                        <p id="cultureText">
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="knowledge-card">
+
+                    <div class="knowledge-icon">
+                        🗣️
+                    </div>
+
+                    <div>
+
+                        <p class="section-label">
+                            LANGUAGE
+                        </p>
+
+                        <h2>
+                            Communication
+                        </h2>
+
+                        <p id="languageText">
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+            </section>
+
+
+            <!-- =============================================
+                 BUDGET
+            ============================================== -->
+
+            <section class="guide-section">
+
+                <header class="section-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            PLAN YOUR MONEY
+                        </p>
+
+                        <h2>
+                            What could your trip cost?
+                        </h2>
+
+                        <p class="section-subtitle">
+                            Illustrative planning ranges.
+                            Actual prices vary by season,
+                            transport, accommodation and
+                            activities.
+                        </p>
+
+                    </div>
+
+                </header>
+
+
+                <div class="budget-grid" id="budgetGrid"></div>
+
+
+                <div class="expense-breakdown">
+
+                    <h3>
+                        Typical expense categories
+                    </h3>
+
+
+                    <div class="expense-list">
+
+                        <div>
+                            <span>🏨 Accommodation</span>
+                            <strong>Stay</strong>
+                        </div>
+
+                        <div>
+                            <span>🍜 Food</span>
+                            <strong>Meals</strong>
+                        </div>
+
+                        <div>
+                            <span>🚆 Transport</span>
+                            <strong>Getting around</strong>
+                        </div>
+
+                        <div>
+                            <span>🎟️ Activities</span>
+                            <strong>Experiences</strong>
+                        </div>
+
+                        <div>
+                            <span>🛍️ Extras</span>
+                            <strong>Shopping & misc.</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 SAFETY
+            ============================================== -->
+
+            <section class="guide-section">
+
+                <header class="section-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            TRAVEL SMART
+                        </p>
+
+                        <h2>
+                            Safety & awareness
+                        </h2>
+
+                    </div>
+
+                </header>
+
+
+                <div class="safety-layout">
+
+
+                    <article class="safety-card">
+
+                        <div class="safety-card-header">
+
+                            <span class="safety-icon">
+                                🛡️
+                            </span>
+
+                            <div>
+
+                                <p class="section-label">
+                                    SAFETY
+                                </p>
+
+                                <h3>
+                                    Things to remember
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <ul class="safety-list" id="safetyList"></ul>
+
+                    </article>
+
+
+                    <article class="emergency-card">
+
+                        <div>
+
+                            <span class="emergency-icon">
+                                📞
+                            </span>
+
+                            <p class="section-label">
+                                EMERGENCY CONTACTS
+                            </p>
+
+                            <h3>
+                                Keep these numbers handy
+                            </h3>
+
+                        </div>
+
+
+                        <div class="emergency-list" id="emergencyList"></div>
+
+
+                        <p class="emergency-note">
+                            Emergency information can change.
+                            Verify the current official contacts
+                            before travelling.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 TRAVEL TIPS
+            ============================================== -->
+
+            <section class="guide-section">
+
+                <header class="section-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            SMART TRAVEL
+                        </p>
+
+                        <h2>
+                            Practical traveller tips
+                        </h2>
+
+                    </div>
+
+                </header>
+
+
+                <div class="tips-grid" id="tipsGrid"></div>
+
+            </section>
+
+
+            <!-- =============================================
+                 FINAL CTA
+            ============================================== -->
+
+            <section class="destination-cta">
+
+                <div>
+
+                    <p class="section-label">
+                        READY TO GO?
+                    </p>
+
+                    <h2>
+                        Turn this destination
+                        into your next story.
+                    </h2>
+
+                    <p>
+                        Start a trip in SAKUM and
+                        build your itinerary, budget,
+                        notes and journal around it.
+                    </p>
+
+                </div>
+
+
+                <a href="../dashboard/dashboard.html" class="cta-button" id="finalPlanButton">
+                    Start planning →
+                </a>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="destination-footer">
+
+        <span>
+            © 2026 SAKUM
+        </span>
+
+        <span>
+            Explore • Plan • Remember
+        </span>
+
+    </footer>
+
+
+    <script src="destination.js"></script>
+
+</body>
+
+</html>

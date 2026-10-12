@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SAKUM</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" href="travel.png" type="image/png">
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="site-header">
+
+        <nav class="navbar" aria-label="Main navigation">
+
+            <!-- =================================================
+
+         BRAND
+
+    ================================================== -->
+
+            <a href="#home" class="logo" data-home-target="home">
+
+                SAKUM
+
+            </a>
+
+            <!-- =================================================
+
+         MAIN LINKS
+
+    ================================================== -->
+
+            <div class="nav-links">
+
+                <a href="#home" class="nav-link active" data-home-target="home">
+
+                    Home
+
+                </a>
+
+                <a href="#destinations" class="nav-link" data-home-target="destinations">
+
+                    Destinations
+
+                </a>
+
+                <a href="#workspace" class="nav-link protected-link" data-workspace-view="trips">
+
+                    My Trips
+
+                </a>
+
+                <a href="#workspace" class="nav-link protected-link" data-workspace-view="journal">
+
+                    Journal
+
+                </a>
+
+                <a href="#about" class="nav-link" data-home-target="about">
+
+                    About
+
+                </a>
+
+            </div>
+
+            <!-- =================================================
+
+         LOGGED OUT NAV
+
+    ================================================== -->
+
+            <div class="nav-actions" id="guestNav">
+
+                <a href="pages/login.html" class="login-btn">
+
+                    Login
+
+                </a>
+
+                <a href="pages/register.html" class="signup-btn">
+
+                    Sign Up →
+
+                </a>
+
+            </div>
+
+            <!-- =================================================
+
+         LOGGED IN NAV
+
+    ================================================== -->
+
+            <div class="logged-in-nav" id="userNav" hidden>
+
+                <!-- WORKSPACE -->
+
+                <div class="workspace-menu">
+
+                    <button type="button" class="workspace-btn" id="workspaceButton" aria-expanded="false">
+
+                        Workspace
+
+                        <span>⌄</span>
+
+                    </button>
+
+                    <div class="workspace-dropdown" id="workspaceDropdown">
+
+                        <a href="#workspace" data-workspace-view="dashboard">
+
+                            <span>▦</span>
+
+                            Dashboard
+
+                        </a>
+
+                        <a href="#workspace" data-workspace-view="trips">
+
+                            <span>🧳</span>
+
+                            My Trips
+
+                        </a>
+
+                        <a href="#workspace" data-workspace-view="itinerary">
+
+                            <span>☷</span>
+
+                            Itinerary
+
+                        </a>
+
+                        <a href="#workspace" data-workspace-view="journal">
+
+                            <span>✎</span>
+
+                            Write Journal
+
+                        </a>
+
+                        <a href="#workspace" data-workspace-view="notes">
+
+                            <span>▤</span>
+
+                            Notes
+
+                        </a>
+
+                        <a href="#workspace" data-workspace-view="tickets">
+
+                            <span>🎫</span>
+
+                            Tickets
+
+                        </a>
+
+                        <a href="#workspace" data-workspace-view="saved">
+
+                            <span>♡</span>
+
+                            Saved Places
+
+                        </a>
+
+                        <a href="#workspace" data-workspace-view="budget">
+
+                            <span>₹</span>
+
+                            Budget
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- PROFILE -->
+
+                <div class="profile-menu">
+
+                    <button type="button" class="profile-button" id="profileButton" aria-expanded="false">
+
+                        <span class="profile-avatar" id="profileAvatar">
+
+                            S
+
+                        </span>
+
+                        <span class="profile-name" id="profileName">
+
+                            Traveller
+
+                        </span>
+
+                        <span class="profile-arrow">
+
+                            ⌄
+
+                        </span>
+
+                    </button>
+
+                    <div class="profile-dropdown" id="profileDropdown">
+
+                        <div class="profile-dropdown-header">
+
+                            <strong id="profileDropdownName">
+
+                                Traveller
+
+                            </strong>
+
+                            <span id="profileDropdownEmail">
+
+                                traveller@example.com
+
+                            </span>
+
+                        </div>
+
+                        <a href="#workspace" data-workspace-view="profile">
+
+                            Profile
+
+                        </a>
+
+                        <a href="#workspace" data-workspace-view="settings">
+
+                            Settings
+
+                        </a>
+
+                        <button type="button" id="homepageLogout" class="dropdown-logout">
+
+                            Logout
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+        <!-- ================= WORKSPACE (EMBEDDED IN HOMEPAGE) ================= -->
+        <section class="workspace-panel" id="workspacePanel" hidden aria-label="Your SAKUM workspace">
+            <div class="workspace-panel-head">
+                <div>
+                    <p class="section-label">YOUR SAKUM WORKSPACE</p>
+                    <h1 id="workspacePanelTitle">Dashboard</h1>
+                </div>
+                <div class="workspace-panel-actions">
+                    <span id="workspaceWelcome">Your travel plans, all in one place.</span>
+                    <button type="button" id="workspaceHomeButton" class="workspace-home-btn">← Back to Home</button>
+                </div>
+            </div>
+            <iframe
+                id="workspaceFrame"
+                class="workspace-frame"
+                src="about:blank"
+                title="SAKUM personal workspace"
+                loading="eager"
+            ></iframe>
+        </section>
+
+
+        <!-- HERO SECTION -->
+
+        <section class="hero" id="home">
+
+            <div class="hero-content">
+
+                <p class="hero-tag">EXPLORE • PLAN • REMEMBER</p>
+
+                <h1 id="heroTitle">
+
+                    Your journey.<br>
+
+                    Your story.
+
+                </h1>
+
+                <p class="hero-text" id="heroText">
+
+                    Plan your trips, organize your itineraries,
+
+                    save your favorite places and share your
+
+                    travel memories with the world.
+
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#workspace" class="primary-btn" data-workspace-view="trips">
+
+                        Plan a Trip
+
+                    </a>
+
+                    <a href="#workspace" class="secondary-btn" data-workspace-view="journal">
+
+                        Explore Journal
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= SEARCH ================= -->
+
+        <section class="search-section">
+
+            <form class="search-box" id="travelSearchForm">
+
+                <div class="search-field">
+
+                    <label for="destination">
+
+                        Destination
+
+                    </label>
+
+                    <input type="text" id="destination" name="destination" placeholder="Where do you want to go?"
+
+                        autocomplete="off">
+
+                </div>
+
+                <div class="search-field">
+
+                    <label for="date">
+
+                        Travel Date
+
+                    </label>
+
+                    <input type="date" id="date" name="date">
+
+                </div>
+
+                <div class="search-field">
+
+                    <label for="budget">
+
+                        Budget
+
+                    </label>
+
+                    <select id="budget" name="budget">
+
+                        <option value="">
+
+                            Select budget
+
+                        </option>
+
+                        <option value="10000">
+
+                            Under ₹10,000
+
+                        </option>
+
+                        <option value="25000">
+
+                            ₹10,000 – ₹25,000
+
+                        </option>
+
+                        <option value="50000">
+
+                            ₹25,000 – ₹50,000
+
+                        </option>
+
+                        <option value="100000">
+
+                            ₹50,000+
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button type="submit" class="search-btn">
+
+                    Search
+
+                </button>
+
+                <p id="searchMessage" class="search-message"></p>
+
+            </form>
+
+        </section>
+
+        <!-- ================= DESTINATIONS ================= -->
+
+        <section class="destinations-section" id="destinations">
+
+            <div class="destinations-container">
+
+                <!-- SECTION HEADER -->
+
+                <header class="destinations-heading">
+
+                    <div>
+
+                        <p class="section-label">
+
+                            DISCOVER
+
+                        </p>
+
+                        <h2>
+
+                            Popular destinations
+
+                        </h2>
+
+                    </div>
+
+                    <a href="pages/search.html" class="view-all-btn">
+
+                        <span>View all destinations</span>
+
+                        <span class="view-arrow">→</span>
+
+                    </a>
+
+                </header>
+
+                <!-- DESTINATION GRID -->
+
+                <div class="destinations-grid">
+
+                    <!-- MANALI -->
+
+                    <article class="destination-card" data-destination="Manali">
+
+                        <div class="destination-image">
+
+                            <img src="assets/destinations/manali.jpg"
+
+                                alt="Mountain landscape in Manali, Himachal Pradesh">
+
+                            <span class="destination-country">
+
+                                India
+
+                            </span>
+
+                        </div>
+
+                        <div class="destination-content">
+
+                            <h3>
+
+                                Manali
+
+                            </h3>
+
+                            <p>
+
+                                Mountains • Adventure • Nature
+
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                    <!-- GOA -->
+
+                    <article class="destination-card" data-destination="Goa">
+
+                        <div class="destination-image">
+
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+
+                                alt="Beautiful beach in Goa">
+
+                            <span class="destination-country">
+
+                                India
+
+                            </span>
+
+                        </div>
+
+                        <div class="destination-content">
+
+                            <h3>
+
+                                Goa
+
+                            </h3>
+
+                            <p>
+
+                                Beaches • Food • Nightlife
+
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                    <!-- TOKYO -->
+
+                    <article class="destination-card" data-destination="Tokyo">
+
+                        <div class="destination-image">
+
+                            <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e"
+
+                                alt="Traditional street in Tokyo">
+
+                            <span class="destination-country">
+
+                                Japan
+
+                            </span>
+
+                        </div>
+
+                        <div class="destination-content">
+
+                            <h3>
+
+                                Tokyo
+
+                            </h3>
+
+                            <p>
+
+                                Culture • Technology • Food
+
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= MY TRIPS ================= -->
+
+        <section class="section trips-section" id="trips">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="section-label">YOUR TRAVEL</p>
+
+                    <h2>My trips</h2>
+
+                </div>
+
+                <a href="#" class="primary-small-btn">
+
+                    + Create Trip
+
+                </a>
+
+            </div>
+
+            <div class="trip-grid">
+
+                <article class="trip-card">
+
+                    <div class="trip-top">
+
+                        <span class="trip-status upcoming">
+
+                            Upcoming
+
+                        </span>
+
+                        <button class="more-btn" type="button">
+
+                            ⋯
+
+                        </button>
+
+                    </div>
+
+                    <h3>Himachal Adventure</h3>
+
+                    <p class="trip-location">
+
+                        📍 Manali, Himachal Pradesh
+
+                    </p>
+
+                    <p class="trip-date">
+
+                        12 Oct – 18 Oct 2026
+
+                    </p>
+
+                    <div class="trip-footer">
+
+                        <div>
+
+                            <span>Budget</span>
+
+                            <strong>₹25,000</strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>Places</span>
+
+                            <strong>08</strong>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <article class="trip-card">
+
+                    <div class="trip-top">
+
+                        <span class="trip-status planning">
+
+                            Planning
+
+                        </span>
+
+                        <button class="more-btn" type="button">
+
+                            ⋯
+
+                        </button>
+
+                    </div>
+
+                    <h3>Japan 2027</h3>
+
+                    <p class="trip-location">
+
+                        📍 Tokyo • Kyoto • Osaka
+
+                    </p>
+
+                    <p class="trip-date">
+
+                        April 2027
+
+                    </p>
+
+                    <div class="trip-footer">
+
+                        <div>
+
+                            <span>Budget</span>
+
+                            <strong>₹1,20,000</strong>
+
+                        </div>
+
+                        <div>
+
+                            <span>Places</span>
+
+                            <strong>15</strong>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- ================= ITINERARY ================= -->
+
+        <section class="section itinerary-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="section-label">PLAN AHEAD</p>
+
+                    <h2>Upcoming itinerary</h2>
+
+                </div>
+
+                <a href="#" class="view-link">
+
+                    Full itinerary →
+
+                </a>
+
+            </div>
+
+            <div class="itinerary">
+
+                <article class="itinerary-item">
+
+                    <time datetime="2026-10-12">
+
+                        <strong>12</strong>
+
+                        <span>OCT</span>
+
+                    </time>
+
+                    <div class="itinerary-content">
+
+                        <h3>Arrive in Manali</h3>
+
+                        <p>Check-in at hotel • Evening walk • Local dinner</p>
+
+                    </div>
+
+                    <span class="cost">
+
+                        ₹4,500
+
+                    </span>
+
+                </article>
+
+                <article class="itinerary-item">
+
+                    <time datetime="2026-10-13">
+
+                        <strong>13</strong>
+
+                        <span>OCT</span>
+
+                    </time>
+
+                    <div class="itinerary-content">
+
+                        <h3>Solang Valley</h3>
+
+                        <p>Adventure activities • Mountain views • Café</p>
+
+                    </div>
+
+                    <span class="cost">
+
+                        ₹3,200
+
+                    </span>
+
+                </article>
+
+                <article class="itinerary-item">
+
+                    <time datetime="2026-10-14">
+
+                        <strong>14</strong>
+
+                        <span>OCT</span>
+
+                    </time>
+
+                    <div class="itinerary-content">
+
+                        <h3>Old Manali</h3>
+
+                        <p>Explore cafés • Shopping • Photography</p>
+
+                    </div>
+
+                    <span class="cost">
+
+                        ₹2,100
+
+                    </span>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- ================= JOURNAL ================= -->
+
+        <section class="section journal-section" id="journal">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="section-label">TRAVEL STORIES</p>
+
+                    <h2>From the journal</h2>
+
+                </div>
+
+                <a href="#" class="view-link">
+
+                    Read all →
+
+                </a>
+
+            </div>
+
+            <div class="journal-grid">
+
+                <article class="journal-card">
+
+                    <div class="journal-image journal-one"></div>
+
+                    <div class="journal-content">
+
+                        <p class="journal-date">
+
+                            24 September 2026
+
+                        </p>
+
+                        <h3>
+
+                            The road to the mountains
+
+                        </h3>
+
+                        <p>
+
+                            A quiet morning, winding roads and
+
+                            some of the best views of the journey.
+
+                        </p>
+
+                        <a href="#" class="read-more">
+
+                            Read story →
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+                <article class="journal-card">
+
+                    <div class="journal-image journal-two"></div>
+
+                    <div class="journal-content">
+
+                        <p class="journal-date">
+
+                            15 August 2026
+
+                        </p>
+
+                        <h3>
+
+                            Five unforgettable places
+
+                        </h3>
+
+                        <p>
+
+                            A collection of places that made
+
+                            the trip worth remembering.
+
+                        </p>
+
+                        <a href="#" class="read-more">
+
+                            Read story →
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- ================= CALL TO ACTION ================= -->
+
+        <section class="cta-section">
+
+            <div>
+
+                <p class="section-label">
+
+                    START YOUR JOURNEY
+
+                </p>
+
+                <h2>
+
+                    Every journey deserves a story.
+
+                </h2>
+
+                <p>
+
+                    Create your first trip and start building
+
+                    your personal travel journal.
+
+                </p>
+
+                <a href="#workspace" class="primary-btn" data-workspace-view="trips">
+
+                    Create Your Trip
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="site-footer" id="about">
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+
+                <h2>SAKUM</h2>
+
+                <p>
+
+                    Plan. Travel. Remember.
+
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <div>
+
+                    <h3>Platform</h3>
+
+                    <a href="#">Destinations</a>
+
+                    <a href="#">My Trips</a>
+
+                    <a href="#">Journal</a>
+
+                </div>
+
+                <div>
+
+                    <h3>Account</h3>
+
+                    <a href="#">Login</a>
+
+                    <a href="#">Sign Up</a>
+
+                    <a href="#">Settings</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>© 2026 SAKUM. All rights reserved.</p>
+
+            <p>Travel better. Remember more.</p>
+
+        </div>
+
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

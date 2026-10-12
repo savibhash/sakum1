@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Search Destinations | SAKUM</title>
+
+    <link
+        rel="icon"
+        href="../travel.png"
+        type="image/png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../style.css"
+    >
+
+    <style>
+
+        .results-page {
+            background: #f7f8f5;
+            min-height: 100vh;
+        }
+
+        .results-main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 70px 24px;
+        }
+
+        .results-header {
+            margin-bottom: 35px;
+        }
+
+        .results-header h1 {
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1;
+            margin: 8px 0 12px;
+        }
+
+        .results-header p {
+            color: #758079;
+            max-width: 650px;
+        }
+
+        .search-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .search-tag {
+            padding: 8px 12px;
+            border-radius: 20px;
+            background: #e9f0ec;
+            color: #173d35;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .result-card {
+            background: white;
+            border: 1px solid #e2e8e4;
+            border-radius: 14px;
+            overflow: hidden;
+            transition: 0.25s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-image {
+            height: 235px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .result-content {
+            padding: 22px;
+        }
+
+        .result-content h2 {
+            font-size: 23px;
+            margin-bottom: 6px;
+        }
+
+        .result-content p {
+            color: #77827c;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .result-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: #173d35;
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .no-results {
+            background: white;
+            border: 1px solid #e2e8e4;
+            border-radius: 14px;
+            padding: 35px;
+            color: #758079;
+        }
+
+        @media (max-width: 850px) {
+
+            .results-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="results-page">
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="site-header">
+
+        <nav
+            class="navbar"
+            aria-label="Main navigation"
+        >
+
+            <a
+                href="../index.html"
+                class="logo"
+            >
+                SAKUM
+            </a>
+
+
+            <div class="nav-links">
+
+                <a
+                    href="../index.html"
+                    class="nav-link"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Destinations
+                </a>
+
+                <a
+                    href="../dashboard/dashboard.html"
+                    class="nav-link"
+                >
+                    My Trips
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    Journal
+                </a>
+
+            </div>
+
+
+            <div class="nav-actions">
+
+                <a
+                    href="login.html"
+                    class="login-btn"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="register.html"
+                    class="signup-btn"
+                >
+                    Sign Up →
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="results-main">
+
+        <header class="results-header">
+
+            <p class="section-label">
+                DISCOVER
+            </p>
+
+            <h1>
+                Find your next destination.
+            </h1>
+
+            <p>
+                Explore places that match your
+                travel plans and start building
+                your next journey.
+            </p>
+
+
+            <div
+                class="search-summary"
+                id="searchSummary"
+            ></div>
+
+        </header>
+
+
+        <section
+            class="results-grid"
+            id="resultsGrid"
+            aria-label="Search results"
+        ></section>
+
+    </main>
+
+
+    <script src="../search.js"></script>
+
+</body>
+
+</html>
