@@ -27,7 +27,8 @@ select {
 ========================================================= */
 
 /* 1. Prevent the whole browser window from scrolling */
-html, body.dashboard-page {
+html,
+body.dashboard-page {
     height: 100vh;
     margin: 0;
     overflow: hidden;
@@ -41,18 +42,23 @@ html, body.dashboard-page {
 }
 
 /* 3. Keep the sidebar fixed to the viewport height (with its own scroll if content overflows) */
-.sidebar, #sidebar {
+.sidebar,
+#sidebar {
     height: 100vh;
-    overflow-y: auto; /* Lets the sidebar scroll internally if menu items exceed height */
-    flex-shrink: 0;   /* Prevents the sidebar from collapsing */
+    overflow-y: auto;
+    /* Lets the sidebar scroll internally if menu items exceed height */
+    flex-shrink: 0;
+    /* Prevents the sidebar from collapsing */
 }
 
 /* 4. Allow the main section to scroll independently */
-.main-content, /* replace with your main container class, e.g., main or .dashboard-main */
+.main-content,
+/* replace with your main container class, e.g., main or .dashboard-main */
 main {
     flex: 1;
     height: 100vh;
-    overflow-y: auto; /* Only the main body scrolls */
+    overflow-y: auto;
+    /* Only the main body scrolls */
 }
 
 /* =========================================================
@@ -334,11 +340,9 @@ main {
     overflow: hidden;
 
     background:
-        linear-gradient(
-            115deg,
+        linear-gradient(115deg,
             rgba(17, 55, 47, 0.98),
-            rgba(24, 75, 63, 0.88)
-        );
+            rgba(24, 75, 63, 0.88));
 
     color: white;
 
@@ -492,7 +496,7 @@ main {
         border-color 0.2s ease;
 }
 
-.quick-card > span {
+.quick-card>span {
     font-size: 25px;
 }
 
@@ -551,8 +555,7 @@ main {
     min-height: 245px;
 
     background:
-        url("https://images.unsplash.com/photo-1500534623283-312aade485b7")
-        center / cover no-repeat;
+        url("https://images.unsplash.com/photo-1500534623283-312aade485b7") center / cover no-repeat;
 }
 
 .trip-details {
@@ -1065,6 +1068,7 @@ main {
     }
 
 }
+
 /* =========================
    SAKUM BRAND
    ========================= */
@@ -1120,9 +1124,11 @@ main {
     box-shadow:
         0 7px 18px rgba(0, 0, 0, 0.18);
 }
+
 .sidebar-header {
     padding: 12px 8px 18px;
 }
+
 /* ================================
    SAKUM SIDEBAR BRAND
    ================================ */
@@ -1200,23 +1206,29 @@ main {
 
     line-height: 1;
 }
+
 /* --- 1. Hide scrollbar on sidebar while keeping scrolling active --- */
-.sidebar, #sidebar {
+.sidebar,
+#sidebar {
     position: relative;
     overflow-y: auto;
     /* Hide scrollbar for Chrome, Safari and Opera */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
 }
 
 .sidebar::-webkit-scrollbar,
 #sidebar::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
+    display: none;
+    /* Chrome, Safari, Edge */
 }
 
 /* --- 2. Sidebar Resizer Handle Styling --- */
 /* Sidebar must be relative so the resizer stays pinned to its edge */
-.sidebar, #sidebar {
+.sidebar,
+#sidebar {
     position: relative !important;
 }
 
@@ -1230,7 +1242,8 @@ main {
     cursor: col-resize;
     z-index: 9999;
     background-color: transparent;
-    border-right: 2px solid rgba(255, 255, 255, 0.15); /* Gives a subtle visible line */
+    border-right: 2px solid rgba(255, 255, 255, 0.15);
+    /* Gives a subtle visible line */
 }
 
 /* Brightens on hover or drag */
@@ -1240,3 +1253,38 @@ main {
     border-right: 2px solid #ffffff;
 }
 
+/* ============================================
+   BACK TO HOME — SIDEBAR BRAND AREA
+============================================ */
+
+.sidebar-home-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    width: 100%;
+    min-height: 46px;
+
+    padding: 12px 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.09);
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.sidebar-home-button:hover {
+    background: rgba(255, 255, 255, 0.17);
+    transform: translateY(-2px);
+} 

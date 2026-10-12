@@ -1005,20 +1005,50 @@ function closeHomepageMenus() {
     profileButton?.setAttribute("aria-expanded", "false");
 }
 
+
 function setActiveHomepageNav(view) {
-    document.querySelectorAll(".nav-links .nav-link").forEach(function (link) {
+
+    document.querySelectorAll(
+        ".nav-links .nav-link"
+    ).forEach(function (link) {
+
         link.classList.remove("active");
+
     });
 
+    const workspaceViews = new Set([
+        "dashboard",
+        "trips",
+        "itinerary",
+        "journal",
+        "notes",
+        "tickets",
+        "saved",
+        "budget",
+        "profile",
+        "settings"
+    ]);
+
     let target = null;
-    if (view === "trips" || view === "dashboard" || view === "itinerary" || view === "notes" || view === "tickets" || view === "saved" || view === "budget" || view === "profile" || view === "settings") {
-        target = document.querySelector('.nav-links .nav-link[data-workspace-view="trips"]');
-    } else if (view === "journal") {
-        target = document.querySelector('.nav-links .nav-link[data-workspace-view="journal"]');
+
+    if (workspaceViews.has(view)) {
+
+        target = document.querySelector(
+            '.nav-links .nav-link[data-workspace-view="dashboard"]'
+        );
+
+    } else {
+
+        target = document.querySelector(
+            `.nav-links .nav-link[data-home-target="${view}"]`
+        );
+
     }
 
     target?.classList.add("active");
+
 }
+
 
 function showHomepage(targetId) {
     document.body.classList.remove("workspace-mode");
@@ -1217,6 +1247,35 @@ workspaceFrame?.addEventListener("load", function () {
         console.warn("Could not attach the homepage workspace bridge:", error);
     }
 });
+/* ============================================
+   HOMEPAGE PROFILE PHOTO
+============================================ */
+
+function setHomepageProfileAvatar(fallbackLetter = "S") {
+    const avatar = document.getElementById("profileAvatar");
+
+    if (!avatar) return;
+
+    const savedPhoto = localStorage.getItem("sakumProfilePhoto");
+
+    if (!savedPhoto) {
+        avatar.textContent = fallbackLetter;
+        return;
+    }
+
+    const img = document.createElement("img");
+    img.alt = "Your profile photo";
+
+    img.onload = function () {
+        avatar.replaceChildren(img);
+    };
+
+    img.onerror = function () {
+        avatar.textContent = fallbackLetter;
+    };
+
+    img.src = savedPhoto;
+}
 
 async function initializeHomepageAuth() {
     const guestNav = document.getElementById("guestNav");
@@ -1247,7 +1306,7 @@ async function initializeHomepageAuth() {
         if (guestNav) guestNav.hidden = true;
         if (userNav) userNav.hidden = false;
         if (profileName) profileName.textContent = name;
-        if (profileAvatar) profileAvatar.textContent = firstLetter;
+        setHomepageProfileAvatar(firstLetter);
         if (profileDropdownName) profileDropdownName.textContent = name;
         if (profileDropdownEmail) profileDropdownEmail.textContent = email;
 
