@@ -1287,4 +1287,111 @@ main {
 .sidebar-home-button:hover {
     background: rgba(255, 255, 255, 0.17);
     transform: translateY(-2px);
-} 
+}
+
+/* =========================================
+   SAKUM FEEDBACK
+========================================= */
+
+.feedback-page {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.feedback-page h2 {
+    margin: 8px 0 12px;
+    color: #172b24;
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 800;
+}
+
+.feedback-intro {
+    max-width: 650px;
+    margin-bottom: 28px;
+    color: #728078;
+    line-height: 1.7;
+}
+
+.feedback-form {
+    display: grid;
+    gap: 22px;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #dfe8e2;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(20, 55, 43, 0.05);
+}
+
+.feedback-field {
+    display: grid;
+    gap: 9px;
+}
+
+.feedback-field label {
+    color: #20372d;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.feedback-field select,
+.feedback-field textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #dce5df;
+    border-radius: 11px;
+    background: #fbfcfb;
+    color: #233a30;
+    font: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.feedback-field textarea {
+    resize: vertical;
+    min-height: 135px;
+}
+
+.feedback-field select:focus,
+.feedback-field textarea:focus {
+    outline: none;
+    border-color: #1b5947;
+    box-shadow: 0 0 0 3px rgba(27, 89, 71, 0.1);
+}
+
+.feedback-submit {
+    justify-self: start;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 11px;
+    background: #173d35;
+    color: #ffffff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.feedback-submit:hover {
+    background: #245c4d;
+    transform: translateY(-2px);
+}
+
+.feedback-status {
+    margin: 0;
+    color: #246b4b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+    .feedback-form {
+        padding: 20px;
+    }
+
+    .feedback-submit {
+        width: 100%;
+    }
+}

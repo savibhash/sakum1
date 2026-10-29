@@ -576,6 +576,153 @@ app.post(
    SERVER
 ====================================================== */
 
+/* ======================================================
+   SAKUM FEEDBACK API
+====================================================== */
+
+app.post("/api/feedback", async function (req, res) {
+    try {
+        // Feedback belongs to the signed-in user.
+        if (!req.session.userId) {
+            return res.status(401).json({
+                success: false,
+                message: "Please log in before submitting feedback."
+            });
+        }
+
+        const body = req.body || {};
+        const category = body.category;
+        const rating = Number(body.rating);
+        const message =
+            typeof body.message === "string"
+                ? body.message.trim()
+                : "";
+
+        const allowedCategories = new Set([
+            "design",
+            "destinations",
+            "trips",
+            "journal",
+            "bug",
+            "suggestion",
+            "other"
+        ]);
+
+        if (
+            !allowedCategories.has(category) ||
+            !Number.isInteger(rating) ||
+            rating < 1 ||
+            rating > 5 ||
+            message.length < 10 ||
+            message.length > 2000
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "Please check your feedback fields and try again."
+            });
+        }
+
+        const result = await pool.query(
+            `INSERT INTO feedback
+                (user_id, category, rating, message)
+             VALUES ($1, $2, $3, $4)
+             RETURNING id, created_at`,
+            [
+                req.session.userId,
+                category,
+                rating,
+                message
+            ]
+        );
+
+        return res.status(201).json({
+            success: true,
+            message: "Thank you! Your feedback has been submitted successfully.",
+            feedback: result.rows[0]
+        });
+
+    } catch (error) {
+        console.error("Feedback submission error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Feedback could not be saved. Please try again."
+        });
+    }
+});
+
+
+/* ======================================================
+   SAKUM NEWSLETTER SIGN-UP API
+====================================================== */
+
+app.post("/api/newsletter/subscribe", async function (req, res) {
+    try {
+        const body = req.body || {};
+
+        const firstName =
+            typeof body.firstName === "string"
+                ? body.firstName.trim()
+                : "";
+
+        const lastName =
+            typeof body.lastName === "string"
+                ? body.lastName.trim()
+                : "";
+
+        const email =
+            typeof body.email === "string"
+                ? body.email.trim().toLowerCase()
+                : "";
+
+        const validEmail =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        if (
+            firstName.length < 1 ||
+            firstName.length > 100 ||
+            lastName.length < 1 ||
+            lastName.length > 100 ||
+            email.length > 255 ||
+            !validEmail ||
+            body.consent !== true
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "Please enter valid details and confirm your consent."
+            });
+        }
+
+        await pool.query(
+            `INSERT INTO newsletter_subscribers
+                (first_name, last_name, email, consented_at)
+             VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+             ON CONFLICT (email)
+             DO UPDATE SET
+                first_name = EXCLUDED.first_name,
+                last_name = EXCLUDED.last_name,
+                consented_at = CURRENT_TIMESTAMP,
+                updated_at = CURRENT_TIMESTAMP,
+                unsubscribed_at = NULL`,
+            [firstName, lastName, email]
+        );
+
+        return res.status(201).json({
+            success: true,
+            message:
+                "Your sign-up has been recorded. SAKUM email delivery is not enabled yet."
+        });
+
+    } catch (error) {
+        console.error("Newsletter sign-up error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Your sign-up could not be saved. Please try again."
+        });
+    }
+});
+
 app.listen(
     PORT,
     function () {

@@ -1,333 +1,240 @@
 (async function initSakumDashboard() {
 
-/* =========================================================
+    /* =========================================================
+    
+       SAKUM DASHBOARD
+    
+       AUTHENTICATION CHECK
+    
+    ========================================================= */
 
-   SAKUM DASHBOARD
+    const authResponse = await fetch(
 
-   AUTHENTICATION CHECK
+        "/api/auth/me",
 
-========================================================= */
+        {
 
-const authResponse = await fetch(
+            method: "GET",
 
-    "/api/auth/me",
-
-    {
-
-        method: "GET",
-
-        credentials: "same-origin"
-
-    }
-
-);
-
-if (!authResponse.ok) {
-
-    window.location.replace(
-
-        "../pages/login.html"
-
-    );
-
-    throw new Error(
-
-        "User is not authenticated."
-
-    );
-
-}
-
-const authData =
-
-    await authResponse.json();
-
-/* =========================================================
-
-   CURRENT USER
-
-========================================================= */
-
-const currentUser =
-
-    authData.user;
-
-console.log(
-
-    "Logged in as:",
-
-    currentUser?.name ?? "Unknown user"
-
-);
-
-/* =========================================================
-
-   HELPER
-
-========================================================= */
-
-function getData(key) {
-
-    return JSON.parse(
-
-        localStorage.getItem(key)
-
-    ) || [];
-
-}
-
-function saveData(key, data) {
-
-    localStorage.setItem(
-
-        key,
-
-        JSON.stringify(data)
-
-    );
-
-}
-
-/* =========================================================
-
-   USER INFORMATION
-
-========================================================= */
-
-const user =
-
-    currentUser || {
-
-        name: "Traveller",
-
-        email: "traveller@example.com"
-
-    };
-
-const firstLetter =
-
-    user.name
-
-        .charAt(0)
-
-        .toUpperCase();
-
-document.getElementById(
-
-    "welcomeTitle"
-
-).textContent =
-
-    `Welcome back, ${user.name}.`;
-
-document.getElementById(
-
-    "topbarName"
-
-).textContent =
-
-    user.name;
-
-document.getElementById(
-
-    "topAvatar"
-
-).textContent =
-
-    firstLetter;
-
-document.getElementById(
-
-    "profileName"
-
-).textContent =
-
-    user.name;
-
-document.getElementById(
-
-    "profileEmail"
-
-).textContent =
-
-    user.email;
-
-/* =========================================================
-
-   NAVIGATION
-
-========================================================= */
-
-const sideLinks =
-
-    document.querySelectorAll(
-
-        ".side-link"
-
-    );
-
-const sections =
-
-    document.querySelectorAll(
-
-        ".dashboard-section"
-
-    );
-
-const pageTitle =
-
-    document.getElementById(
-
-        "pageTitle"
-
-    );
-
-function openSection(sectionName) {
-
-    sideLinks.forEach(function (link) {
-
-        link.classList.toggle(
-
-            "active",
-
-            link.dataset.section === sectionName
-
-        );
-
-    });
-
-    sections.forEach(function (section) {
-
-        section.classList.toggle(
-
-            "active",
-
-            section.id ===
-
-            `section-${sectionName}`
-
-        );
-
-    });
-
-    const activeLink =
-
-        document.querySelector(
-
-            `.side-link[data-section="${sectionName}"]`
-
-        );
-
-    if (activeLink) {
-
-        pageTitle.textContent =
-
-            activeLink
-
-                .querySelector("span:last-child")
-
-                .textContent;
-
-    }
-
-}
-
-sideLinks.forEach(function (link) {
-
-    link.addEventListener(
-
-        "click",
-
-        function () {
-
-            openSection(
-
-                link.dataset.section
-
-            );
+            credentials: "same-origin"
 
         }
 
     );
 
-});
+    if (!authResponse.ok) {
 
-/* Open dashboard sections from the homepage workspace without navigating the outer page. */
-function openRequestedDashboardSection(viewName) {
-    const normalize = function (value) {
-        return String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-    };
+        window.location.replace(
 
-    const requested = normalize(viewName || "dashboard");
-    const aliases = {
-        dashboard: ["dashboard", "home", "overview"],
-        trips: ["trips", "mytrips"],
-        itinerary: ["itinerary", "plan"],
-        journal: ["journal", "writejournal", "myjournal"],
-        notes: ["notes", "note"],
-        tickets: ["tickets", "ticket"],
-        saved: ["saved", "savedplace", "savedplaces", "favorites", "favourites"],
-        budget: ["budget", "expenses"],
-        profile: ["profile", "account"],
-        settings: ["settings", "setting"]
-    };
-    const wanted = aliases[requested] || [requested];
+            "../pages/login.html"
 
-    const link = Array.from(sideLinks).find(function (candidate) {
-        const key = normalize(candidate.dataset.section);
-        const text = normalize(candidate.textContent);
-        return wanted.includes(key) || wanted.includes(text) || wanted.some(function (alias) {
-            return key.includes(alias) || text.includes(alias);
+        );
+
+        throw new Error(
+
+            "User is not authenticated."
+
+        );
+
+    }
+
+    const authData =
+
+        await authResponse.json();
+
+    /* =========================================================
+    
+       CURRENT USER
+    
+    ========================================================= */
+
+    const currentUser =
+
+        authData.user;
+
+    console.log(
+
+        "Logged in as:",
+
+        currentUser?.name ?? "Unknown user"
+
+    );
+
+    /* =========================================================
+    
+       HELPER
+    
+    ========================================================= */
+
+    function getData(key) {
+
+        return JSON.parse(
+
+            localStorage.getItem(key)
+
+        ) || [];
+
+    }
+
+    function saveData(key, data) {
+
+        localStorage.setItem(
+
+            key,
+
+            JSON.stringify(data)
+
+        );
+
+    }
+
+    /* =========================================================
+    
+       USER INFORMATION
+    
+    ========================================================= */
+
+    const user =
+
+        currentUser || {
+
+            name: "Traveller",
+
+            email: "traveller@example.com"
+
+        };
+
+    const firstLetter =
+
+        user.name
+
+            .charAt(0)
+
+            .toUpperCase();
+
+    document.getElementById(
+
+        "welcomeTitle"
+
+    ).textContent =
+
+        `Welcome back, ${user.name}.`;
+
+    document.getElementById(
+
+        "topbarName"
+
+    ).textContent =
+
+        user.name;
+
+    document.getElementById(
+
+        "topAvatar"
+
+    ).textContent =
+
+        firstLetter;
+
+    document.getElementById(
+
+        "profileName"
+
+    ).textContent =
+
+        user.name;
+
+    document.getElementById(
+
+        "profileEmail"
+
+    ).textContent =
+
+        user.email;
+
+    /* =========================================================
+    
+       NAVIGATION
+    
+    ========================================================= */
+
+    const sideLinks =
+
+        document.querySelectorAll(
+
+            ".side-link"
+
+        );
+
+    const sections =
+
+        document.querySelectorAll(
+
+            ".dashboard-section"
+
+        );
+
+    const pageTitle =
+
+        document.getElementById(
+
+            "pageTitle"
+
+        );
+
+    function openSection(sectionName) {
+
+        sideLinks.forEach(function (link) {
+
+            link.classList.toggle(
+
+                "active",
+
+                link.dataset.section === sectionName
+
+            );
+
         });
-    });
 
-    if (link && link.dataset.section) {
-        openSection(link.dataset.section);
-        return true;
+        sections.forEach(function (section) {
+
+            section.classList.toggle(
+
+                "active",
+
+                section.id ===
+
+                `section-${sectionName}`
+
+            );
+
+        });
+
+        const activeLink =
+
+            document.querySelector(
+
+                `.side-link[data-section="${sectionName}"]`
+
+            );
+
+        if (activeLink) {
+
+            pageTitle.textContent =
+
+                activeLink
+
+                    .querySelector("span:last-child")
+
+                    .textContent;
+
+        }
+
     }
 
-    const section = Array.from(sections).find(function (candidate) {
-        const key = normalize(candidate.id.replace(/^section-/, ""));
-        return wanted.includes(key) || wanted.some(function (alias) { return key.includes(alias); });
-    });
+    sideLinks.forEach(function (link) {
 
-    if (section) {
-        openSection(section.id.replace(/^section-/, ""));
-        return true;
-    }
-
-    // A wrong/unknown view should fall back to the dashboard, not leave a blank area.
-    const dashboardLink = Array.from(sideLinks).find(function (candidate) {
-        return normalize(candidate.dataset.section) === "dashboard" || normalize(candidate.textContent).includes("dashboard");
-    });
-    if (dashboardLink && dashboardLink.dataset.section) {
-        openSection(dashboardLink.dataset.section);
-        return true;
-    }
-    return false;
-}
-
-window.openSakumDashboardSection = openRequestedDashboardSection;
-
-const initialWorkspaceView = new URLSearchParams(window.location.search).get("view");
-if (initialWorkspaceView) {
-    openRequestedDashboardSection(initialWorkspaceView);
-}
-
-
-/* Quick action buttons */
-
-document
-
-    .querySelectorAll(
-
-        "[data-open-section]"
-
-    )
-
-    .forEach(function (button) {
-
-        button.addEventListener(
+        link.addEventListener(
 
             "click",
 
@@ -335,7 +242,7 @@ document
 
                 openSection(
 
-                    button.dataset.openSection
+                    link.dataset.section
 
                 );
 
@@ -345,135 +252,228 @@ document
 
     });
 
-/* =========================================================
+    /* Open dashboard sections from the homepage workspace without navigating the outer page. */
+    function openRequestedDashboardSection(viewName) {
+        const normalize = function (value) {
+            return String(value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        };
 
-   MOBILE SIDEBAR
+        const requested = normalize(viewName || "dashboard");
+        const aliases = {
+            dashboard: ["dashboard", "home", "overview"],
+            trips: ["trips", "mytrips"],
+            itinerary: ["itinerary", "plan"],
+            journal: ["journal", "writejournal", "myjournal"],
+            notes: ["notes", "note"],
+            tickets: ["tickets", "ticket"],
+            saved: ["saved", "savedplace", "savedplaces", "favorites", "favourites"],
+            budget: ["budget", "expenses"],
+            profile: ["profile", "account"],
+            settings: ["settings", "setting"]
+        };
+        const wanted = aliases[requested] || [requested];
 
-========================================================= */
+        const link = Array.from(sideLinks).find(function (candidate) {
+            const key = normalize(candidate.dataset.section);
+            const text = normalize(candidate.textContent);
+            return wanted.includes(key) || wanted.includes(text) || wanted.some(function (alias) {
+                return key.includes(alias) || text.includes(alias);
+            });
+        });
 
-const sidebar =
+        if (link && link.dataset.section) {
+            openSection(link.dataset.section);
+            return true;
+        }
 
-    document.getElementById("sidebar");
+        const section = Array.from(sections).find(function (candidate) {
+            const key = normalize(candidate.id.replace(/^section-/, ""));
+            return wanted.includes(key) || wanted.some(function (alias) { return key.includes(alias); });
+        });
 
-const mobileMenu =
+        if (section) {
+            openSection(section.id.replace(/^section-/, ""));
+            return true;
+        }
 
-    document.getElementById("mobileMenu");
+        // A wrong/unknown view should fall back to the dashboard, not leave a blank area.
+        const dashboardLink = Array.from(sideLinks).find(function (candidate) {
+            return normalize(candidate.dataset.section) === "dashboard" || normalize(candidate.textContent).includes("dashboard");
+        });
+        if (dashboardLink && dashboardLink.dataset.section) {
+            openSection(dashboardLink.dataset.section);
+            return true;
+        }
+        return false;
+    }
 
-const sidebarClose =
+    window.openSakumDashboardSection = openRequestedDashboardSection;
 
-    document.getElementById("sidebarClose");
+    const initialWorkspaceView = new URLSearchParams(window.location.search).get("view");
+    if (initialWorkspaceView) {
+        openRequestedDashboardSection(initialWorkspaceView);
+    }
 
-const sidebarOverlay =
 
-    document.getElementById("sidebarOverlay");
+    /* Quick action buttons */
 
-function openSidebar() {
+    document
 
-    if (sidebar) {
+        .querySelectorAll(
 
-        sidebar.classList.add("open");
+            "[data-open-section]"
+
+        )
+
+        .forEach(function (button) {
+
+            button.addEventListener(
+
+                "click",
+
+                function () {
+
+                    openSection(
+
+                        button.dataset.openSection
+
+                    );
+
+                }
+
+            );
+
+        });
+
+    /* =========================================================
+    
+       MOBILE SIDEBAR
+    
+    ========================================================= */
+
+    const sidebar =
+
+        document.getElementById("sidebar");
+
+    const mobileMenu =
+
+        document.getElementById("mobileMenu");
+
+    const sidebarClose =
+
+        document.getElementById("sidebarClose");
+
+    const sidebarOverlay =
+
+        document.getElementById("sidebarOverlay");
+
+    function openSidebar() {
+
+        if (sidebar) {
+
+            sidebar.classList.add("open");
+
+        }
+
+        if (sidebarOverlay) {
+
+            sidebarOverlay.classList.add("open");
+
+        }
 
     }
+
+    function closeSidebar() {
+
+        if (sidebar) {
+
+            sidebar.classList.remove("open");
+
+        }
+
+        if (sidebarOverlay) {
+
+            sidebarOverlay.classList.remove("open");
+
+        }
+
+    }
+
+    /* Open sidebar */
+
+    if (mobileMenu) {
+
+        mobileMenu.addEventListener(
+
+            "click",
+
+            openSidebar
+
+        );
+
+    }
+
+    /* Close sidebar */
+
+    if (sidebarClose) {
+
+        sidebarClose.addEventListener(
+
+            "click",
+
+            closeSidebar
+
+        );
+
+    }
+
+    /* Click outside sidebar */
 
     if (sidebarOverlay) {
 
-        sidebarOverlay.classList.add("open");
+        sidebarOverlay.addEventListener(
+
+            "click",
+
+            closeSidebar
+
+        );
 
     }
 
-}
+    /* =========================================================
+    
+       TRIPS
+    
+    ========================================================= */
 
-function closeSidebar() {
+    let trips = JSON.parse(
 
-    if (sidebar) {
+        localStorage.getItem("sakumTrips")
 
-        sidebar.classList.remove("open");
+    ) || [];
 
-    }
+    const tripForm =
 
-    if (sidebarOverlay) {
+        document.getElementById("tripForm");
 
-        sidebarOverlay.classList.remove("open");
+    const tripList =
 
-    }
+        document.getElementById("tripList");
 
-}
+    function renderTrips() {
 
-/* Open sidebar */
+        if (!tripList) {
 
-if (mobileMenu) {
+            return;
 
-    mobileMenu.addEventListener(
+        }
 
-        "click",
+        tripList.innerHTML = "";
 
-        openSidebar
+        if (trips.length === 0) {
 
-    );
-
-}
-
-/* Close sidebar */
-
-if (sidebarClose) {
-
-    sidebarClose.addEventListener(
-
-        "click",
-
-        closeSidebar
-
-    );
-
-}
-
-/* Click outside sidebar */
-
-if (sidebarOverlay) {
-
-    sidebarOverlay.addEventListener(
-
-        "click",
-
-        closeSidebar
-
-    );
-
-}
-
-/* =========================================================
-
-   TRIPS
-
-========================================================= */
-
-let trips = JSON.parse(
-
-    localStorage.getItem("sakumTrips")
-
-) || [];
-
-const tripForm =
-
-    document.getElementById("tripForm");
-
-const tripList =
-
-    document.getElementById("tripList");
-
-function renderTrips() {
-
-    if (!tripList) {
-
-        return;
-
-    }
-
-    tripList.innerHTML = "";
-
-    if (trips.length === 0) {
-
-        tripList.innerHTML = `
+            tripList.innerHTML = `
 
             <div class="saved-item">
 
@@ -493,21 +493,21 @@ function renderTrips() {
 
         `;
 
-        return;
+            return;
 
-    }
+        }
 
-    trips.forEach(function (trip, index) {
+        trips.forEach(function (trip, index) {
 
-        const article =
+            const article =
 
-            document.createElement("article");
+                document.createElement("article");
 
-        article.className =
+            article.className =
 
-            "saved-item";
+                "saved-item";
 
-        article.innerHTML = `
+            article.innerHTML = `
 
             <div>
 
@@ -549,191 +549,191 @@ function renderTrips() {
 
         `;
 
-        tripList.appendChild(article);
-
-    });
-
-    document
-
-        .querySelectorAll("[data-trip-index]")
-
-        .forEach(function (button) {
-
-            button.addEventListener(
-
-                "click",
-
-                function () {
-
-                    const index =
-
-                        Number(
-
-                            button.dataset.tripIndex
-
-                        );
-
-                    trips.splice(index, 1);
-
-                    localStorage.setItem(
-
-                        "sakumTrips",
-
-                        JSON.stringify(trips)
-
-                    );
-
-                    renderTrips();
-
-                    updateStats();
-
-                }
-
-            );
+            tripList.appendChild(article);
 
         });
 
-}
+        document
 
-/* SAVE TRIP */
+            .querySelectorAll("[data-trip-index]")
 
-if (tripForm) {
+            .forEach(function (button) {
 
-    tripForm.addEventListener(
+                button.addEventListener(
 
-        "submit",
+                    "click",
 
-        function (event) {
+                    function () {
 
-            event.preventDefault();
+                        const index =
 
-            const name =
+                            Number(
 
-                document
+                                button.dataset.tripIndex
 
-                    .getElementById("tripName")
+                            );
 
-                    .value
+                        trips.splice(index, 1);
 
-                    .trim();
+                        localStorage.setItem(
 
-            const destination =
+                            "sakumTrips",
 
-                document
+                            JSON.stringify(trips)
 
-                    .getElementById("tripDestination")
+                        );
 
-                    .value
+                        renderTrips();
 
-                    .trim();
+                        updateStats();
 
-            const date =
-
-                document
-
-                    .getElementById("tripDate")
-
-                    .value;
-
-            const budget =
-
-                document
-
-                    .getElementById("tripBudget")
-
-                    .value;
-
-            if (
-
-                !name ||
-
-                !destination ||
-
-                !date ||
-
-                !budget
-
-            ) {
-
-                alert(
-
-                    "Please fill in all trip details."
+                    }
 
                 );
 
-                return;
+            });
+
+    }
+
+    /* SAVE TRIP */
+
+    if (tripForm) {
+
+        tripForm.addEventListener(
+
+            "submit",
+
+            function (event) {
+
+                event.preventDefault();
+
+                const name =
+
+                    document
+
+                        .getElementById("tripName")
+
+                        .value
+
+                        .trim();
+
+                const destination =
+
+                    document
+
+                        .getElementById("tripDestination")
+
+                        .value
+
+                        .trim();
+
+                const date =
+
+                    document
+
+                        .getElementById("tripDate")
+
+                        .value;
+
+                const budget =
+
+                    document
+
+                        .getElementById("tripBudget")
+
+                        .value;
+
+                if (
+
+                    !name ||
+
+                    !destination ||
+
+                    !date ||
+
+                    !budget
+
+                ) {
+
+                    alert(
+
+                        "Please fill in all trip details."
+
+                    );
+
+                    return;
+
+                }
+
+                const newTrip = {
+
+                    name: name,
+
+                    destination: destination,
+
+                    date: date,
+
+                    budget: Number(budget)
+
+                };
+
+                trips.push(newTrip);
+
+                localStorage.setItem(
+
+                    "sakumTrips",
+
+                    JSON.stringify(trips)
+
+                );
+
+                tripForm.reset();
+
+                renderTrips();
+
+                updateStats();
+
+                alert(
+
+                    "Trip saved successfully! 🧳"
+
+                );
 
             }
 
-            const newTrip = {
-
-                name: name,
-
-                destination: destination,
-
-                date: date,
-
-                budget: Number(budget)
-
-            };
-
-            trips.push(newTrip);
-
-            localStorage.setItem(
-
-                "sakumTrips",
-
-                JSON.stringify(trips)
-
-            );
-
-            tripForm.reset();
-
-            renderTrips();
-
-            updateStats();
-
-            alert(
-
-                "Trip saved successfully! 🧳"
-
-            );
-
-        }
-
-    );
-
-}
-
-/* First render */
-
-renderTrips();
-
-/* =========================================================
-
-   ITINERARY
-
-========================================================= */
-
-let itinerary =
-
-    getData("sakumItinerary");
-
-function renderItinerary() {
-
-    const list =
-
-        document.getElementById(
-
-            "itineraryList"
-
         );
 
-    list.innerHTML = "";
+    }
 
-    if (itinerary.length === 0) {
+    /* First render */
 
-        list.innerHTML = `
+    renderTrips();
+
+    /* =========================================================
+    
+       ITINERARY
+    
+    ========================================================= */
+
+    let itinerary =
+
+        getData("sakumItinerary");
+
+    function renderItinerary() {
+
+        const list =
+
+            document.getElementById(
+
+                "itineraryList"
+
+            );
+
+        list.innerHTML = "";
+
+        if (itinerary.length === 0) {
+
+            list.innerHTML = `
 
             <div class="saved-item">
 
@@ -749,13 +749,13 @@ function renderItinerary() {
 
         `;
 
-        return;
+            return;
 
-    }
+        }
 
-    itinerary.forEach(function (item, index) {
+        itinerary.forEach(function (item, index) {
 
-        list.innerHTML += `
+            list.innerHTML += `
 
             <article class="saved-item">
 
@@ -793,143 +793,143 @@ function renderItinerary() {
 
         `;
 
-    });
-
-    document
-
-        .querySelectorAll(
-
-            "[data-itinerary]"
-
-        )
-
-        .forEach(function (button) {
-
-            button.addEventListener(
-
-                "click",
-
-                function () {
-
-                    itinerary.splice(
-
-                        Number(
-
-                            button.dataset.itinerary
-
-                        ),
-
-                        1
-
-                    );
-
-                    saveData(
-
-                        "sakumItinerary",
-
-                        itinerary
-
-                    );
-
-                    renderItinerary();
-
-                }
-
-            );
-
         });
 
-}
+        document
 
-document
+            .querySelectorAll(
 
-    .getElementById("itineraryForm")
+                "[data-itinerary]"
 
-    .addEventListener(
+            )
 
-        "submit",
+            .forEach(function (button) {
 
-        function (event) {
+                button.addEventListener(
 
-            event.preventDefault();
+                    "click",
 
-            itinerary.push({
+                    function () {
 
-                date:
+                        itinerary.splice(
 
-                    document
+                            Number(
 
-                        .getElementById("itemDate")
+                                button.dataset.itinerary
 
-                        .value,
+                            ),
 
-                time:
+                            1
 
-                    document
+                        );
 
-                        .getElementById("itemTime")
+                        saveData(
 
-                        .value,
+                            "sakumItinerary",
 
-                title:
+                            itinerary
 
-                    document
+                        );
 
-                        .getElementById("itemTitle")
+                        renderItinerary();
 
-                        .value
+                    }
 
-                        .trim()
+                );
 
             });
 
-            saveData(
+    }
 
-                "sakumItinerary",
+    document
 
-                itinerary
+        .getElementById("itineraryForm")
 
-            );
+        .addEventListener(
 
-            event.target.reset();
+            "submit",
 
-            renderItinerary();
+            function (event) {
 
-            alert(
+                event.preventDefault();
 
-                "Itinerary item added!"
+                itinerary.push({
 
-            );
+                    date:
 
-        }
+                        document
 
-    );
+                            .getElementById("itemDate")
 
-/* =========================================================
+                            .value,
 
-   JOURNAL
+                    time:
 
-========================================================= */
+                        document
 
-let journals =
+                            .getElementById("itemTime")
 
-    getData("sakumJournals");
+                            .value,
 
-function renderJournals() {
+                    title:
 
-    const list =
+                        document
 
-        document.getElementById(
+                            .getElementById("itemTitle")
 
-            "journalList"
+                            .value
+
+                            .trim()
+
+                });
+
+                saveData(
+
+                    "sakumItinerary",
+
+                    itinerary
+
+                );
+
+                event.target.reset();
+
+                renderItinerary();
+
+                alert(
+
+                    "Itinerary item added!"
+
+                );
+
+            }
 
         );
 
-    list.innerHTML = "";
+    /* =========================================================
+    
+       JOURNAL
+    
+    ========================================================= */
 
-    if (journals.length === 0) {
+    let journals =
 
-        list.innerHTML = `
+        getData("sakumJournals");
+
+    function renderJournals() {
+
+        const list =
+
+            document.getElementById(
+
+                "journalList"
+
+            );
+
+        list.innerHTML = "";
+
+        if (journals.length === 0) {
+
+            list.innerHTML = `
 
             <div class="saved-item">
 
@@ -945,13 +945,13 @@ function renderJournals() {
 
         `;
 
-        return;
+            return;
 
-    }
+        }
 
-    journals.forEach(function (journal, index) {
+        journals.forEach(function (journal, index) {
 
-        list.innerHTML += `
+            list.innerHTML += `
 
             <article class="saved-item">
 
@@ -987,141 +987,141 @@ function renderJournals() {
 
         `;
 
-    });
-
-    document
-
-        .querySelectorAll(
-
-            "[data-journal]"
-
-        )
-
-        .forEach(function (button) {
-
-            button.addEventListener(
-
-                "click",
-
-                function () {
-
-                    journals.splice(
-
-                        Number(
-
-                            button.dataset.journal
-
-                        ),
-
-                        1
-
-                    );
-
-                    saveData(
-
-                        "sakumJournals",
-
-                        journals
-
-                    );
-
-                    renderJournals();
-
-                    updateStats();
-
-                }
-
-            );
-
         });
 
-}
+        document
 
-document
+            .querySelectorAll(
 
-    .getElementById("journalForm")
+                "[data-journal]"
 
-    .addEventListener(
+            )
 
-        "submit",
+            .forEach(function (button) {
 
-        function (event) {
+                button.addEventListener(
 
-            event.preventDefault();
+                    "click",
 
-            journals.push({
+                    function () {
 
-                title:
+                        journals.splice(
 
-                    document
+                            Number(
 
-                        .getElementById("journalTitle")
+                                button.dataset.journal
 
-                        .value
+                            ),
 
-                        .trim(),
+                            1
 
-                text:
+                        );
 
-                    document
+                        saveData(
 
-                        .getElementById("journalText")
+                            "sakumJournals",
 
-                        .value
+                            journals
 
-                        .trim()
+                        );
+
+                        renderJournals();
+
+                        updateStats();
+
+                    }
+
+                );
 
             });
 
-            saveData(
+    }
 
-                "sakumJournals",
+    document
 
-                journals
+        .getElementById("journalForm")
 
-            );
+        .addEventListener(
 
-            event.target.reset();
+            "submit",
 
-            renderJournals();
+            function (event) {
 
-            updateStats();
+                event.preventDefault();
 
-            alert(
+                journals.push({
 
-                "Journal saved!"
+                    title:
 
-            );
+                        document
 
-        }
+                            .getElementById("journalTitle")
 
-    );
+                            .value
 
-/* =========================================================
+                            .trim(),
 
-   NOTES
+                    text:
 
-========================================================= */
+                        document
 
-let notes =
+                            .getElementById("journalText")
 
-    getData("sakumNotes");
+                            .value
 
-function renderNotes() {
+                            .trim()
 
-    const list =
+                });
 
-        document.getElementById(
+                saveData(
 
-            "notesList"
+                    "sakumJournals",
+
+                    journals
+
+                );
+
+                event.target.reset();
+
+                renderJournals();
+
+                updateStats();
+
+                alert(
+
+                    "Journal saved!"
+
+                );
+
+            }
 
         );
 
-    list.innerHTML = "";
+    /* =========================================================
+    
+       NOTES
+    
+    ========================================================= */
 
-    notes.forEach(function (note, index) {
+    let notes =
 
-        list.innerHTML += `
+        getData("sakumNotes");
+
+    function renderNotes() {
+
+        const list =
+
+            document.getElementById(
+
+                "notesList"
+
+            );
+
+        list.innerHTML = "";
+
+        notes.forEach(function (note, index) {
+
+            list.innerHTML += `
 
             <article class="saved-item">
 
@@ -1157,75 +1157,75 @@ function renderNotes() {
 
         `;
 
-    });
+        });
 
-}
+    }
 
-document
+    document
 
-    .getElementById("notesForm")
+        .getElementById("notesForm")
 
-    .addEventListener(
+        .addEventListener(
 
-        "submit",
+            "submit",
 
-        function (event) {
+            function (event) {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            const note =
+                const note =
 
-                document
+                    document
 
-                    .getElementById("noteText")
+                        .getElementById("noteText")
 
-                    .value
+                        .value
 
-                    .trim();
+                        .trim();
 
-            notes.push(note);
+                notes.push(note);
 
-            saveData(
+                saveData(
 
-                "sakumNotes",
+                    "sakumNotes",
 
-                notes
+                    notes
 
-            );
+                );
 
-            event.target.reset();
+                event.target.reset();
 
-            renderNotes();
+                renderNotes();
 
-        }
-
-    );
-
-/* =========================================================
-
-   TICKETS
-
-========================================================= */
-
-let tickets =
-
-    getData("sakumTickets");
-
-function renderTickets() {
-
-    const list =
-
-        document.getElementById(
-
-            "ticketList"
+            }
 
         );
 
-    list.innerHTML = "";
+    /* =========================================================
+    
+       TICKETS
+    
+    ========================================================= */
 
-    tickets.forEach(function (ticket, index) {
+    let tickets =
 
-        list.innerHTML += `
+        getData("sakumTickets");
+
+    function renderTickets() {
+
+        const list =
+
+            document.getElementById(
+
+                "ticketList"
+
+            );
+
+        list.innerHTML = "";
+
+        tickets.forEach(function (ticket, index) {
+
+            list.innerHTML += `
 
             <article class="saved-item">
 
@@ -1261,85 +1261,85 @@ function renderTickets() {
 
         `;
 
-    });
+        });
 
-}
+    }
 
-document
+    document
 
-    .getElementById("ticketForm")
+        .getElementById("ticketForm")
 
-    .addEventListener(
+        .addEventListener(
 
-        "submit",
+            "submit",
 
-        function (event) {
+            function (event) {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            tickets.push({
+                tickets.push({
 
-                type:
+                    type:
 
-                    document
+                        document
 
-                        .getElementById("ticketType")
+                            .getElementById("ticketType")
 
-                        .value,
+                            .value,
 
-                details:
+                    details:
 
-                    document
+                        document
 
-                        .getElementById("ticketName")
+                            .getElementById("ticketName")
 
-                        .value
+                            .value
 
-                        .trim()
+                            .trim()
 
-            });
+                });
 
-            saveData(
+                saveData(
 
-                "sakumTickets",
+                    "sakumTickets",
 
-                tickets
+                    tickets
 
-            );
+                );
 
-            event.target.reset();
+                event.target.reset();
 
-            renderTickets();
+                renderTickets();
 
-        }
-
-    );
-
-/* =========================================================
-
-   SAVED PLACES
-
-========================================================= */
-
-let savedPlaces =
-
-    getData("sakumSavedPlaces");
-
-function renderSavedPlaces() {
-
-    const list =
-
-        document.getElementById(
-
-            "savedList"
+            }
 
         );
 
-    list.innerHTML = "";
+    /* =========================================================
+    
+       SAVED PLACES
+    
+    ========================================================= */
 
-    if (savedPlaces.length === 0) {
+    let savedPlaces =
 
-        list.innerHTML = `
+        getData("sakumSavedPlaces");
+
+    function renderSavedPlaces() {
+
+        const list =
+
+            document.getElementById(
+
+                "savedList"
+
+            );
+
+        list.innerHTML = "";
+
+        if (savedPlaces.length === 0) {
+
+            list.innerHTML = `
 
             <div class="saved-item">
 
@@ -1355,13 +1355,13 @@ function renderSavedPlaces() {
 
         `;
 
-        return;
+            return;
 
-    }
+        }
 
-    savedPlaces.forEach(function (place, index) {
+        savedPlaces.forEach(function (place, index) {
 
-        list.innerHTML += `
+            list.innerHTML += `
 
             <article class="saved-item">
 
@@ -1397,143 +1397,143 @@ function renderSavedPlaces() {
 
         `;
 
-    });
+        });
+
+        document
+
+            .querySelectorAll(
+
+                "[data-place]"
+
+            )
+
+            .forEach(function (button) {
+
+                button.addEventListener(
+
+                    "click",
+
+                    function () {
+
+                        savedPlaces.splice(
+
+                            Number(
+
+                                button.dataset.place
+
+                            ),
+
+                            1
+
+                        );
+
+                        saveData(
+
+                            "sakumSavedPlaces",
+
+                            savedPlaces
+
+                        );
+
+                        renderSavedPlaces();
+
+                        updateStats();
+
+                    }
+
+                );
+
+            });
+
+    }
 
     document
 
-        .querySelectorAll(
+        .getElementById("savedForm")
 
-            "[data-place]"
+        .addEventListener(
 
-        )
+            "submit",
 
-        .forEach(function (button) {
+            function (event) {
 
-            button.addEventListener(
+                event.preventDefault();
 
-                "click",
+                savedPlaces.push(
 
-                function () {
+                    document
 
-                    savedPlaces.splice(
+                        .getElementById("savedPlace")
 
-                        Number(
+                        .value
 
-                            button.dataset.place
+                        .trim()
 
-                        ),
+                );
 
-                        1
+                saveData(
 
-                    );
+                    "sakumSavedPlaces",
 
-                    saveData(
+                    savedPlaces
 
-                        "sakumSavedPlaces",
+                );
 
-                        savedPlaces
+                event.target.reset();
 
-                    );
+                renderSavedPlaces();
 
-                    renderSavedPlaces();
+                updateStats();
 
-                    updateStats();
-
-                }
-
-            );
-
-        });
-
-}
-
-document
-
-    .getElementById("savedForm")
-
-    .addEventListener(
-
-        "submit",
-
-        function (event) {
-
-            event.preventDefault();
-
-            savedPlaces.push(
-
-                document
-
-                    .getElementById("savedPlace")
-
-                    .value
-
-                    .trim()
-
-            );
-
-            saveData(
-
-                "sakumSavedPlaces",
-
-                savedPlaces
-
-            );
-
-            event.target.reset();
-
-            renderSavedPlaces();
-
-            updateStats();
-
-        }
-
-    );
-
-/* =========================================================
-
-   BUDGET
-
-========================================================= */
-
-function renderBudget() {
-
-    const total =
-
-        trips.reduce(
-
-            function (sum, trip) {
-
-                return sum +
-
-                    Number(trip.budget || 0);
-
-            },
-
-            0
+            }
 
         );
 
-    document.getElementById(
+    /* =========================================================
+    
+       BUDGET
+    
+    ========================================================= */
 
-        "budgetPageTotal"
+    function renderBudget() {
 
-    ).textContent =
+        const total =
 
-        `₹${total.toLocaleString("en-IN")}`;
+            trips.reduce(
 
-    const list =
+                function (sum, trip) {
+
+                    return sum +
+
+                        Number(trip.budget || 0);
+
+                },
+
+                0
+
+            );
 
         document.getElementById(
 
-            "budgetList"
+            "budgetPageTotal"
 
-        );
+        ).textContent =
 
-    list.innerHTML = "";
+            `₹${total.toLocaleString("en-IN")}`;
 
-    trips.forEach(function (trip) {
+        const list =
 
-        list.innerHTML += `
+            document.getElementById(
+
+                "budgetList"
+
+            );
+
+        list.innerHTML = "";
+
+        trips.forEach(function (trip) {
+
+            list.innerHTML += `
 
             <article class="saved-item">
 
@@ -1563,103 +1563,103 @@ function renderBudget() {
 
         `;
 
-    });
+        });
 
-}
+    }
 
-/* =========================================================
+    /* =========================================================
+    
+       STATS
+    
+    ========================================================= */
 
-   STATS
+    function updateStats() {
 
-========================================================= */
+        document.getElementById(
 
-function updateStats() {
+            "tripCount"
 
-    document.getElementById(
+        ).textContent =
 
-        "tripCount"
+            trips.length;
 
-    ).textContent =
+        document.getElementById(
 
-        trips.length;
+            "journalCount"
 
-    document.getElementById(
+        ).textContent =
 
-        "journalCount"
+            journals.length;
 
-    ).textContent =
+        document.getElementById(
 
-        journals.length;
+            "savedCount"
 
-    document.getElementById(
+        ).textContent =
 
-        "savedCount"
+            savedPlaces.length;
 
-    ).textContent =
+        const total =
 
-        savedPlaces.length;
+            trips.reduce(
 
-    const total =
+                function (sum, trip) {
 
-        trips.reduce(
+                    return sum +
 
-            function (sum, trip) {
+                        Number(trip.budget || 0);
 
-                return sum +
+                },
 
-                    Number(trip.budget || 0);
+                0
 
-            },
+            );
 
-            0
+        document.getElementById(
+
+            "budgetTotal"
+
+        ).textContent =
+
+            `₹${total.toLocaleString("en-IN")}`;
+
+        renderBudget();
+
+    }
+
+    /* =========================================================
+    
+       PROFILE PHOTO
+    
+    ========================================================= */
+
+    const photoInput =
+
+        document.getElementById(
+
+            "photoInput"
 
         );
 
-    document.getElementById(
+    const profilePhoto =
 
-        "budgetTotal"
+        document.getElementById(
 
-    ).textContent =
+            "profilePhoto"
 
-        `₹${total.toLocaleString("en-IN")}`;
+        );
 
-    renderBudget();
+    const storedPhoto =
 
-}
+        localStorage.getItem(
 
-/* =========================================================
+            "sakumProfilePhoto"
 
-   PROFILE PHOTO
+        );
 
-========================================================= */
+    function displayProfilePhoto(photo) {
 
-const photoInput =
-
-    document.getElementById(
-
-        "photoInput"
-
-    );
-
-const profilePhoto =
-
-    document.getElementById(
-
-        "profilePhoto"
-
-    );
-
-const storedPhoto =
-
-    localStorage.getItem(
-
-        "sakumProfilePhoto"
-
-    );
-
-function displayProfilePhoto(photo) {
-
-    profilePhoto.innerHTML = `
+        profilePhoto.innerHTML = `
 
         <img
 
@@ -1671,11 +1671,11 @@ function displayProfilePhoto(photo) {
 
     `;
 
-    document.getElementById(
+        document.getElementById(
 
-        "topAvatar"
+            "topAvatar"
 
-    ).innerHTML = `
+        ).innerHTML = `
 
         <img
 
@@ -1689,197 +1689,121 @@ function displayProfilePhoto(photo) {
 
     `;
 
-}
+    }
 
-if (storedPhoto) {
+    if (storedPhoto) {
 
-    displayProfilePhoto(
+        displayProfilePhoto(
 
-        storedPhoto
+            storedPhoto
 
-    );
+        );
 
-} else {
+    } else {
 
-    profilePhoto.textContent =
+        profilePhoto.textContent =
 
-        firstLetter;
-
-}
-
-photoInput.addEventListener(
-
-    "change",
-
-    function () {
-
-        const file =
-
-            photoInput.files[0];
-
-        if (!file) {
-
-            return;
-
-        }
-
-        const reader =
-
-            new FileReader();
-
-        reader.onload =
-
-            function (event) {
-
-                const photo =
-
-                    event.target.result;
-
-                localStorage.setItem(
-
-                    "sakumProfilePhoto",
-
-                    photo
-
-                );
-
-                displayProfilePhoto(
-
-                    photo
-
-                );
-
-            };
-
-        reader.readAsDataURL(file);
+            firstLetter;
 
     }
 
-);
+    photoInput.addEventListener(
 
-/* =========================================================
+        "change",
 
-   SETTINGS
+        function () {
 
-========================================================= */
+            const file =
 
-const compactToggle =
+                photoInput.files[0];
 
-    document.getElementById(
+            if (!file) {
 
-        "compactToggle"
+                return;
 
-    );
+            }
 
-compactToggle.addEventListener(
+            const reader =
 
-    "click",
+                new FileReader();
 
-    function () {
+            reader.onload =
 
-        const active =
+                function (event) {
 
-            compactToggle.textContent ===
+                    const photo =
 
-            "ON";
+                        event.target.result;
 
-        if (active) {
+                    localStorage.setItem(
 
-            compactToggle.textContent =
+                        "sakumProfilePhoto",
 
-                "OFF";
+                        photo
 
-            document.body.classList.remove(
+                    );
 
-                "compact-sidebar"
+                    displayProfilePhoto(
 
-            );
+                        photo
 
-        } else {
+                    );
 
-            compactToggle.textContent =
+                };
 
-                "ON";
-
-            document.body.classList.add(
-
-                "compact-sidebar"
-
-            );
+            reader.readAsDataURL(file);
 
         }
 
-    }
-
-);
-
-/* =========================================================
-
-   LOGOUT
-
-========================================================= */
-
-const logoutButton =
-
-    document.getElementById(
-
-        "dashboardLogout"
-
     );
 
-if (logoutButton) {
+    /* =========================================================
+    
+       SETTINGS
+    
+    ========================================================= */
 
-    logoutButton.addEventListener(
+    const compactToggle =
+
+        document.getElementById(
+
+            "compactToggle"
+
+        );
+
+    compactToggle.addEventListener(
 
         "click",
 
-        async function () {
+        function () {
 
-            try {
+            const active =
 
-                const response =
+                compactToggle.textContent ===
 
-                    await fetch(
+                "ON";
 
-                        "/api/auth/logout",
+            if (active) {
 
-                        {
+                compactToggle.textContent =
 
-                            method: "POST"
+                    "OFF";
 
-                        }
+                document.body.classList.remove(
 
-                    );
-
-                if (!response.ok) {
-
-                    alert(
-
-                        "Logout failed."
-
-                    );
-
-                    return;
-
-                }
-
-                window.location.href =
-
-                    "../pages/login.html";
-
-            } catch (error) {
-
-                console.error(
-
-                    "Logout error:",
-
-                    error
+                    "compact-sidebar"
 
                 );
 
-                alert(
+            } else {
 
-                    "Unable to logout."
+                compactToggle.textContent =
+
+                    "ON";
+
+                document.body.classList.add(
+
+                    "compact-sidebar"
 
                 );
 
@@ -1889,95 +1813,253 @@ if (logoutButton) {
 
     );
 
-}
+    /* =========================================================
+    
+       LOGOUT
+    
+    ========================================================= */
 
-/* =========================================================
+    const logoutButton =
 
-   INITIAL RENDER
+        document.getElementById(
 
-========================================================= */
+            "dashboardLogout"
 
-renderTrips();
+        );
 
-renderItinerary();
+    if (logoutButton) {
 
-renderJournals();
+        logoutButton.addEventListener(
 
-renderNotes();
+            "click",
 
-renderTickets();
+            async function () {
 
-renderSavedPlaces();
+                try {
 
-updateStats();
+                    const response =
 
-const resizer = document.getElementById('sidebarResizer');
+                        await fetch(
 
-if (sidebar && resizer) {
+                            "/api/auth/logout",
 
-    let isResizing = false;
+                            {
 
-    resizer.addEventListener('mousedown', (e) => {
+                                method: "POST"
 
-        isResizing = true;
+                            }
 
-        resizer.classList.add('is-resizing');
+                        );
 
-        document.body.style.cursor = 'col-resize';
+                    if (!response.ok) {
 
-        document.body.style.userSelect = 'none'; // Prevent accidental text selection while dragging
+                        alert(
 
-    });
+                            "Logout failed."
 
-    document.addEventListener('mousemove', (e) => {
+                        );
 
-        if (!isResizing) return;
+                        return;
 
-        // Calculate new width relative to the left edge of the screen
+                    }
 
-        const newWidth = e.clientX;
+                    window.location.href =
 
-        // Set min and max constraints (e.g., between 200px and 450px)
+                        "../pages/login.html";
 
-        if (newWidth >= 180 && newWidth <= 450) {
+                } catch (error) {
 
-            sidebar.style.width = `${newWidth}px`;
+                    console.error(
 
-            sidebar.style.minWidth = `${newWidth}px`; // ensure flex doesn't shrink it
+                        "Logout error:",
 
-        }
+                        error
 
-    });
+                    );
 
-    document.addEventListener('mouseup', () => {
+                    alert(
 
-        if (isResizing) {
+                        "Unable to logout."
 
-            isResizing = false;
+                    );
 
-            resizer.classList.remove('is-resizing');
+                }
 
-            document.body.style.cursor = '';
+            }
 
-            document.body.style.userSelect = '';
+        );
 
-        }
+    }
 
-    });
+    /* =========================================================
+    
+       INITIAL RENDER
+    
+    ========================================================= */
 
-}
+    renderTrips();
 
-function escapeHTML(value) {
+    renderItinerary();
 
-    const div =
+    renderJournals();
 
-        document.createElement("div");
+    renderNotes();
 
-    div.textContent = value;
+    renderTickets();
 
-    return div.innerHTML;
+    renderSavedPlaces();
 
-}
+    updateStats();
+
+    const resizer = document.getElementById('sidebarResizer');
+
+    if (sidebar && resizer) {
+
+        let isResizing = false;
+
+        resizer.addEventListener('mousedown', (e) => {
+
+            isResizing = true;
+
+            resizer.classList.add('is-resizing');
+
+            document.body.style.cursor = 'col-resize';
+
+            document.body.style.userSelect = 'none'; // Prevent accidental text selection while dragging
+
+        });
+
+        document.addEventListener('mousemove', (e) => {
+
+            if (!isResizing) return;
+
+            // Calculate new width relative to the left edge of the screen
+
+            const newWidth = e.clientX;
+
+            // Set min and max constraints (e.g., between 200px and 450px)
+
+            if (newWidth >= 180 && newWidth <= 450) {
+
+                sidebar.style.width = `${newWidth}px`;
+
+                sidebar.style.minWidth = `${newWidth}px`; // ensure flex doesn't shrink it
+
+            }
+
+        });
+
+        document.addEventListener('mouseup', () => {
+
+            if (isResizing) {
+
+                isResizing = false;
+
+                resizer.classList.remove('is-resizing');
+
+                document.body.style.cursor = '';
+
+                document.body.style.userSelect = '';
+
+            }
+
+        });
+
+    }
+
+    function escapeHTML(value) {
+
+        const div =
+
+            document.createElement("div");
+
+        div.textContent = value;
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =========================================
+       FEEDBACK FORM — DATABASE VERSION
+    ========================================= */
+
+    const feedbackForm =
+        document.getElementById("feedbackForm");
+
+    if (feedbackForm) {
+        feedbackForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const category =
+                document.getElementById("feedbackCategory").value;
+
+            const rating =
+                document.getElementById("feedbackRating").value;
+
+            const message =
+                document.getElementById("feedbackMessage").value.trim();
+
+            const status =
+                document.getElementById("feedbackStatus");
+
+            const submitButton =
+                feedbackForm.querySelector('button[type="submit"]');
+
+            if (
+                !category ||
+                !rating ||
+                message.length < 10 ||
+                message.length > 2000
+            ) {
+                status.textContent =
+                    "Complete all fields. Your message must be 10–2000 characters.";
+                return;
+            }
+
+            submitButton.disabled = true;
+            status.textContent = "Submitting your feedback…";
+
+            try {
+                const response = await fetch("/api/feedback", {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        category: category,
+                        rating: Number(rating),
+                        message: message
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(
+                        result.message || "Feedback submission failed."
+                    );
+                }
+
+                feedbackForm.reset();
+
+                status.textContent =
+                    "Thank you! Your feedback has been submitted successfully.";
+
+            } catch (error) {
+                console.error("Feedback form error:", error);
+
+                status.textContent =
+                    error.message ||
+                    "Could not submit feedback. Please try again.";
+
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+    }
 
 
 })();

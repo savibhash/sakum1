@@ -112,7 +112,10 @@
                     <span>◉</span>
                     <span>Profile</span>
                 </button>
-
+                <a href="#" class="side-link" data-section="feedback">
+                    <span aria-hidden="true">💬</span>
+                    <span>Feedback</span>
+                </a>
 
                 <button class="side-link" data-section="settings">
                     <span>⚙</span>
@@ -189,6 +192,73 @@
             <!-- ==================================================
                  DASHBOARD SECTION
             =================================================== -->
+            <!-- FEEDBACK SECTION -->
+
+            <section class="dashboard-section" id="section-feedback">
+                <div class="feedback-page">
+
+                    <p class="section-label">YOUR VOICE MATTERS</p>
+
+                    <h2>Help us improve SAKUM</h2>
+
+                    <p class="feedback-intro">
+                        Your feedback helps us make trip planning
+                        and travel journaling better for everyone.
+                    </p>
+
+                    <form id="feedbackForm" class="feedback-form">
+
+                        <div class="feedback-field">
+                            <label for="feedbackCategory">
+                                What is your feedback about?
+                            </label>
+
+                            <select id="feedbackCategory" required>
+                                <option value="">Select a category</option>
+                                <option value="design">Website design</option>
+                                <option value="destinations">Destination guides</option>
+                                <option value="trips">Trip planning</option>
+                                <option value="journal">Travel journal</option>
+                                <option value="bug">Report a problem</option>
+                                <option value="suggestion">New feature idea</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="feedback-field">
+                            <label for="feedbackRating">
+                                How was your experience?
+                            </label>
+
+                            <select id="feedbackRating" required>
+                                <option value="">Choose a rating</option>
+                                <option value="5">5 — Excellent</option>
+                                <option value="4">4 — Good</option>
+                                <option value="3">3 — Average</option>
+                                <option value="2">2 — Needs improvement</option>
+                                <option value="1">1 — Poor</option>
+                            </select>
+                        </div>
+
+                        <div class="feedback-field">
+                            <label for="feedbackMessage">
+                                Tell us more
+                            </label>
+
+                            <textarea id="feedbackMessage" rows="5" minlength="10" maxlength="2000"
+                                placeholder="What worked well? What could we improve?" required></textarea>
+                        </div>
+
+                        <button type="submit" class="feedback-submit">
+                            Submit feedback →
+                        </button>
+
+                        <p id="feedbackStatus" class="feedback-status" role="status" aria-live="polite"></p>
+
+                    </form>
+
+                </div>
+            </section>
 
             <section class="dashboard-section active" id="section-dashboard">
 
@@ -1040,20 +1110,7 @@
             </section>
 
 
-            <!-- Footer -->
-
-            <footer class="dashboard-footer">
-
-                <span>
-                    © 2026 SAKUM
-                </span>
-
-                <span>
-                    Plan • Travel • Remember
-                </span>
-
-            </footer>
-
+            
         </main>
 
     </div>

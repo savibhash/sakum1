@@ -1357,6 +1357,87 @@ async function initializeHomepageAuth() {
     }
 
     return homepageSessionUser;
+
+    /* =========================================
+       FOOTER NEWSLETTER
+    ========================================= */
+
+    const newsletterForm =
+        document.getElementById("sakumNewsletterForm");
+
+    const newsletterStatus =
+        document.getElementById("newsletterStatus");
+
+    const footerYear =
+        document.getElementById("sakumFooterYear");
+
+    if (footerYear) {
+        footerYear.textContent = new Date().getFullYear();
+    }
+
+    if (newsletterForm) {
+        newsletterForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const button =
+                newsletterForm.querySelector('button[type="submit"]');
+
+            const formData = new FormData(newsletterForm);
+
+            const payload = {
+                firstName: String(
+                    formData.get("firstName") || ""
+                ).trim(),
+
+                lastName: String(
+                    formData.get("lastName") || ""
+                ).trim(),
+
+                email: String(
+                    formData.get("email") || ""
+                ).trim(),
+
+                consent:
+                    document.getElementById("newsletterConsent").checked
+            };
+
+            button.disabled = true;
+            newsletterStatus.textContent = "Saving your sign-up…";
+
+            try {
+                const response = await fetch("/api/newsletter/subscribe", {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(
+                        result.message || "Sign-up failed."
+                    );
+                }
+
+                newsletterForm.reset();
+                newsletterStatus.textContent = result.message;
+
+            } catch (error) {
+                console.error("Newsletter form error:", error);
+
+                newsletterStatus.textContent =
+                    error.message || "Could not save your sign-up.";
+
+            } finally {
+                button.disabled = false;
+            }
+        });
+    }
+
 }
 
 homepageAuthPromise = initializeHomepageAuth();
