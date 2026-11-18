@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const session = require("express-session");
+const cookieSession = require("cookie-session");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 
@@ -18,13 +18,23 @@ dotenv.config({
 
 const app = express();
 
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
+
+if (!process.env.SESSION_SECRET) {
+    console.error("SESSION_SECRET is not set. Add it to your environment variables.");
+    process.exit(1);
+}
+
+/* Render sits behind a proxy; required for secure cookies */
+app.set("trust proxy", 1);
+
 
 const PORT =
     Number(process.env.PORT) || 3000;
 
 
 const ROOT_DIR =
-    path.join(__dirname, "..");
+    path.join(__dirname, "..", "public");
 /* ======================================================
    MIDDLEWARE
 ====================================================== */
@@ -47,26 +57,21 @@ app.use(
 ====================================================== */
 
 app.use(
-    session({
+    cookieSession({
 
-        secret:
-            process.env.SESSION_SECRET,
+        name: "sakum_session",
 
-        resave: false,
+        keys: [
+            process.env.SESSION_SECRET
+        ],
 
-        saveUninitialized: false,
+        httpOnly: true,
 
-        cookie: {
+        sameSite: "lax",
 
-            httpOnly: true,
+        secure: IS_PRODUCTION,
 
-            sameSite: "lax",
-
-            secure: false,
-
-            maxAge: 1000 * 60 * 60 * 8
-
-        }
+        maxAge: 1000 * 60 * 60 * 8
 
     })
 );
@@ -76,9 +81,20 @@ app.use(
    FRONTEND FILES
 ====================================================== */
 
-app.use(
-    express.static(ROOT_DIR)
-);
+/* Only serve public frontend files (never server/, .env, package.json, etc.) */
+["assets", "dashboard", "pages"].forEach(function (dir) {
+    app.use("/" + dir, express.static(path.join(ROOT_DIR, dir)));
+});
+
+["index.html", "script.js", "search.js", "style.css", "travel.png", "travel-nav.jpg"].forEach(function (file) {
+    app.get("/" + file, function (req, res) {
+        res.sendFile(path.join(ROOT_DIR, file));
+    });
+});
+
+app.get("/", function (req, res) {
+    res.sendFile(path.join(ROOT_DIR, "index.html"));
+});
 
 
 /* ======================================================
@@ -470,9 +486,7 @@ app.get(
                 result.rows.length === 0
             ) {
 
-                req.session.destroy(
-                    function () { }
-                );
+                req.session = null;
 
 
                 return res.status(401).json({
@@ -528,45 +542,17 @@ app.post(
     "/api/auth/logout",
     function (req, res) {
 
-        req.session.destroy(
-            function (error) {
-
-                if (error) {
-
-                    console.error(
-                        "Logout error:",
-                        error
-                    );
+        req.session = null;
 
 
-                    return res.status(500).json({
+        res.json({
 
-                        success: false,
+            success: true,
 
-                        message:
-                            "Could not log out."
+            message:
+                "Logged out successfully."
 
-                    });
-
-                }
-
-
-                res.clearCookie(
-                    "connect.sid"
-                );
-
-
-                res.json({
-
-                    success: true,
-
-                    message:
-                        "Logged out successfully."
-
-                });
-
-            }
-        );
+        });
 
     }
 );
@@ -723,13 +709,21 @@ app.post("/api/newsletter/subscribe", async function (req, res) {
     }
 });
 
-app.listen(
-    PORT,
-    function () {
+if (require.main === module) {
 
-        console.log(
-            `SAKUM server running on http://localhost:${PORT}`
-        );
+    app.listen(
+        PORT,
+        "0.0.0.0",
+        function () {
 
-    }
-);
+            console.log(
+                `SAKUM server running on http://localhost:${PORT}`
+            );
+
+        }
+    );
+
+}
+
+
+module.exports = app;

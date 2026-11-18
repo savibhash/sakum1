@@ -161,18 +161,20 @@ If `sakum_db` already exists, skip the create command. If `psql` is not recogniz
 
 ### 4. Configure the environment
 
-Create or update `server/.env` with your local PostgreSQL connection values and a long, private session secret. The variable names in `.env` must match the names read by `server/db.js` and `server/server.js`.
+Create or update `server/.env` with a long, private session secret. The running server reads it from that file. For Neon, keep the supplied `DATABASE_URL` in the project-root `.env.local`; `server/db.js` loads it automatically through Neon’s HTTPS driver. This also works on networks that block PostgreSQL TCP port 5432.
 
 A typical configuration contains values for:
 
 ```dotenv
 PORT=3000
+SESSION_SECRET=replace_with_a_long_random_secret
+
+# Use these only when connecting to a local PostgreSQL server instead of Neon.
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=sakum_db
 DB_USER=postgres
 DB_PASSWORD=replace_with_your_local_postgres_password
-SESSION_SECRET=replace_with_a_long_random_secret
 ```
 
 **Important:** this is a template, not a guarantee of the variable names used by every version of the code. If the names in your `db.js` or `server.js` differ, use the names those files expect. Never publish real passwords or session secrets.
@@ -182,8 +184,10 @@ SESSION_SECRET=replace_with_a_long_random_secret
 Run this from the project root:
 
 ```bash
-node server/server.js
+npm.cmd start
 ```
+
+In PowerShell, `npm.cmd` bypasses a local execution-policy block on `npm.ps1`. On Command Prompt, Git Bash, or after enabling the PowerShell script policy, `npm start` works as well.
 
 Keep the terminal open while using the site. If the server reports an error, read the first error message; it usually identifies a missing dependency, database connection issue, or configuration value.
 
@@ -201,6 +205,24 @@ Use the Express server on port `3000` for authentication and database-backed rou
 - Ensure `.env` files are excluded from Git before pushing changes.
 - Do not paste database passwords, session secrets, or other credentials into issues, commits, screenshots, or public documentation.
 - For a deployment, configure environment variables through the hosting provider’s secret manager rather than committing a `.env` file.
+
+## Deploying to Vercel
+
+The project is ready for Vercel through `server.js` and `vercel.json`. Vercel serves the frontend from `public/` and invokes the same Express application used locally.
+
+1. Push the project changes, including `public/`, `server.js`, `server/server.js`, `server/db.js`, `vercel.json`, `package.json`, and `package-lock.json`.
+2. Import the repository into Vercel with the repository root as the Root Directory. Leave Build Command and Output Directory empty.
+3. Add these environment variables for Production, Preview, and Development:
+
+   ```dotenv
+   DATABASE_URL=the_full_Neon_pooled_connection_string
+   SESSION_SECRET=a_long_unique_random_secret
+   NODE_ENV=production
+   ```
+
+4. Deploy, then visit `/api/health` on the deployed URL. A successful response contains `"success": true`.
+
+Never use the masked connection string shown in a screenshot. Copy the complete value directly from Neon’s connection dialog or from your local `.env.local`.
 
 ## Authentication API
 

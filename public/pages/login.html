@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Login | SAKUM</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../travel.png" type="image/png">
+</head>
+
+
+<body class="auth-page">
+
+
+    <!-- Background overlay -->
+    <div class="auth-overlay"></div>
+
+
+    <!-- Main authentication area -->
+    <main class="auth-container">
+
+
+        <!-- Left side -->
+        <section class="auth-intro">
+
+            <a href="../index.html" class="auth-logo">
+                SAKUM
+            </a>
+
+            <div class="intro-content">
+
+                <p class="intro-label">
+                    WELCOME BACK
+                </p>
+
+                <h1>
+                    Your next<br>
+                    adventure<br>
+                    starts here.
+                </h1>
+
+                <p>
+                    Continue planning your journeys,
+                    discovering new places and keeping
+                    your travel stories alive.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Login card -->
+        <section class="auth-card">
+
+            <div class="auth-header">
+
+                <p class="auth-small-title">
+                    TRAVEL • EXPLORE • REMEMBER
+                </p>
+
+                <h2>
+                    Welcome back
+                </h2>
+
+                <p>
+                    Sign in to continue your journey.
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm" class="auth-form">
+
+
+                <!-- Email -->
+                <div class="input-group">
+
+                    <label for="loginEmail">
+                        Email address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="input-group">
+
+                    <div class="label-row">
+
+                        <label for="loginPassword">
+                            Password
+                        </label>
+
+                        <button
+                            type="button"
+                            class="forgot-btn"
+                            id="forgotPassword"
+                        >
+                            Forgot password?
+                        </button>
+
+                    </div>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="loginPassword"
+                            aria-label="Show password"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Remember -->
+                <label class="remember-row">
+
+                    <input
+                        type="checkbox"
+                        id="rememberMe"
+                    >
+
+                    <span>
+                        Remember me
+                    </span>
+
+                </label>
+
+
+                <!-- Message -->
+                <p
+                    id="loginMessage"
+                    class="form-message"
+                ></p>
+
+
+                <!-- Login button -->
+                <button
+                    type="submit"
+                    class="auth-submit"
+                >
+                    <span>Login to SAKUM</span>
+                    <span class="submit-arrow">→</span>
+                </button>
+
+
+            </form>
+
+
+            <!-- Divider -->
+            <div class="auth-divider">
+                <span>New to SAKUM?</span>
+            </div>
+
+
+            <!-- Register -->
+            <a
+                href="register.html"
+                class="outline-auth-btn"
+            >
+                Create an account
+            </a>
+
+
+            <!-- Home -->
+            <a
+                href="../index.html"
+                class="back-home"
+            >
+                ← Back to homepage
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <script src="../script.js"></script>
+
+</body>
+
+</html>
