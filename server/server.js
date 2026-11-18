@@ -1,10 +1,9 @@
 const express = require("express");
 const path = require("path");
-const cookieSession = require("cookie-session");
+const session = require("express-session");
+const connectPgSimple = require("connect-pg-simple");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
-
-const pool = require("./db");
 
 
 /* ======================================================
@@ -12,9 +11,19 @@ const pool = require("./db");
 ====================================================== */
 
 dotenv.config({
-    path: path.join(__dirname, ".env")
+    path: path.join(__dirname, "..", ".env.local"),
+    quiet: true
 });
 
+dotenv.config({
+    path: path.join(__dirname, ".env"),
+    override: true,
+    quiet: true
+});
+
+const pool = require("./db");
+const PostgresSessionStore =
+    connectPgSimple(session);
 
 const app = express();
 
@@ -57,21 +66,39 @@ app.use(
 ====================================================== */
 
 app.use(
-    cookieSession({
+    session({
+
+        store:
+            new PostgresSessionStore({
+
+                pool,
+
+                tableName: "user_sessions",
+
+                createTableIfMissing: false
+
+            }),
 
         name: "sakum_session",
 
-        keys: [
-            process.env.SESSION_SECRET
-        ],
+        secret:
+            process.env.SESSION_SECRET,
 
-        httpOnly: true,
+        resave: false,
 
-        sameSite: "lax",
+        saveUninitialized: false,
 
-        secure: IS_PRODUCTION,
+        cookie: {
 
-        maxAge: 1000 * 60 * 60 * 8
+            httpOnly: true,
+
+            sameSite: "lax",
+
+            secure: IS_PRODUCTION,
+
+            maxAge: 1000 * 60 * 60 * 8
+
+        }
 
     })
 );
@@ -486,7 +513,9 @@ app.get(
                 result.rows.length === 0
             ) {
 
-                req.session = null;
+                req.session.destroy(
+                    function () { }
+                );
 
 
                 return res.status(401).json({
@@ -542,17 +571,45 @@ app.post(
     "/api/auth/logout",
     function (req, res) {
 
-        req.session = null;
+        req.session.destroy(
+            function (error) {
+
+                if (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
 
 
-        res.json({
+                    return res.status(500).json({
 
-            success: true,
+                        success: false,
 
-            message:
-                "Logged out successfully."
+                        message:
+                            "Could not log out."
 
-        });
+                    });
+
+                }
+
+
+                res.clearCookie(
+                    "sakum_session"
+                );
+
+
+                res.json({
+
+                    success: true,
+
+                    message:
+                        "Logged out successfully."
+
+                });
+
+            }
+        );
 
     }
 );

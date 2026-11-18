@@ -10,18 +10,25 @@ const dotenv = require("dotenv");
  * PostgreSQL fallback. Values in server/.env intentionally take priority.
  */
 dotenv.config({
-    path: path.join(__dirname, "..", ".env.local")
+    path: path.join(__dirname, "..", ".env.local"),
+    quiet: true
 });
 
 dotenv.config({
     path: path.join(__dirname, ".env"),
-    override: true
+    override: true,
+    quiet: true
 });
 
 
 const databaseUrl =
     process.env.DATABASE_URL ||
-    process.env.DB_URL;
+    process.env.DB_URL ||
+    "";
+
+
+const IS_PRODUCTION =
+    process.env.NODE_ENV === "production";
 
 
 const localDatabaseConfig = {
@@ -39,6 +46,15 @@ const localDatabaseConfig = {
 };
 
 
+if (IS_PRODUCTION && !process.env.DATABASE_URL) {
+
+    throw new Error(
+        "DATABASE_URL is required when NODE_ENV is production."
+    );
+
+}
+
+
 if (
     !databaseUrl &&
     (
@@ -50,7 +66,7 @@ if (
 ) {
 
     throw new Error(
-        "Database configuration is missing. Set DATABASE_URL in .env.local or provide DB_HOST, DB_NAME, DB_USER, and DB_PASSWORD in server/.env."
+        "Database configuration is missing. Set DATABASE_URL or provide DB_HOST, DB_NAME, DB_USER, and DB_PASSWORD for local development."
     );
 
 }
@@ -77,12 +93,38 @@ function createNeonHttpClient(connectionString) {
 
     return {
 
-        query: function (queryText, values) {
+        query: function (queryText, values, callback) {
 
-            return sql.query(
-                queryText,
-                values || []
-            );
+            const parameters =
+                typeof values === "function"
+                    ? []
+                    : values || [];
+
+            const done =
+                typeof values === "function"
+                    ? values
+                    : callback;
+
+            const query =
+                sql.query(
+                    queryText,
+                    parameters
+                );
+
+            if (typeof done === "function") {
+
+                query.then(
+                    function (result) {
+                        done(null, result);
+                    },
+                    function (error) {
+                        done(error);
+                    }
+                );
+
+            }
+
+            return query;
 
         }
 
